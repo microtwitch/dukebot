@@ -1,7 +1,7 @@
 package de.com.fdm.bot;
 
 import de.com.fdm.config.ConfigProperties;
-import de.com.fdm.grpc.dispatcher.client.DispatcherClient;
+import de.com.fdm.grpc.dispatcher.DispatcherClient;
 import de.com.fdm.grpc.dispatcher.lib.OutboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

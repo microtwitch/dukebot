@@ -1,4 +1,4 @@
-package de.com.fdm.grpc.dispatcher.client;
+package de.com.fdm.grpc.dispatcher;
 
 import de.com.fdm.grpc.dispatcher.lib.DispatcherGrpc;
 import de.com.fdm.grpc.dispatcher.lib.OutboundMessage;

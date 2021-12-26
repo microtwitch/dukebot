@@ -19,6 +19,10 @@ repositories {
     mavenCentral()
 }
 
+jar {
+    enabled = false
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter:${springBootVersion}")
     implementation('net.devh:grpc-server-spring-boot-starter:2.13.0.RELEASE')
