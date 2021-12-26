@@ -1,5 +1,6 @@
 package de.com.fdm.bot;
 
+import de.com.fdm.bot.commands.Command;
 import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.grpc.dispatcher.DispatcherClient;
 import de.com.fdm.grpc.dispatcher.lib.OutboundMessage;
@@ -15,9 +16,7 @@ public class CommandHandler {
     @Autowired
     private DispatcherClient dispatcherClient;
 
-    public void handleCommand(PingCommand cmd) {
-        System.out.println(cmd);
-
+    public void handleCommand(Command cmd) {
         OutboundMessage msg = OutboundMessage.newBuilder()
                 .setAuth(config.getBotAuth())
                 .setChannel(cmd.getChannel())

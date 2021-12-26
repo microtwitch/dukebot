@@ -1,5 +1,6 @@
 package de.com.fdm.bot;
 
+import de.com.fdm.bot.commands.Command;
 import de.com.fdm.grpc.receiver.lib.TwitchMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ public class MessageHandler {
             return;
         }
 
-        PingCommand cmd = PingCommand.parseMessage(msg);
+        Command cmd = CommandParser.parseMessage(msg);
         this.commandHandler.handleCommand(cmd);
     }
 }
