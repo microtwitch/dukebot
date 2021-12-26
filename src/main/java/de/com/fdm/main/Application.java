@@ -2,8 +2,8 @@ package de.com.fdm.main;
 
 
 import de.com.fdm.config.ConfigProperties;
-import de.com.fdm.grpc.client.ReceiverClient;
-import de.com.fdm.grpc.lib.Registration;
+import de.com.fdm.grpc.receiver.client.ReceiverClient;
+import de.com.fdm.grpc.receiver.lib.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +13,9 @@ import org.springframework.context.event.EventListener;
 import java.util.Arrays;
 
 
-@SpringBootApplication(scanBasePackages = {"de.com.fdm.grpc.service",
-        "de.com.fdm.grpc.client",
+@SpringBootApplication(scanBasePackages = {"de.com.fdm.grpc.receiver",
+        "de.com.fdm.grpc.dispatcher",
+        "de.com.fdm.bot",
         "de.com.fdm.config"})
 public class Application {
 

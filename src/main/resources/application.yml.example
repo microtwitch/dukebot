@@ -7,6 +7,8 @@ bot:
   channels: >
       matthewde,
       gopherobot
+  name: "gopherobot"
+  auth: "secret"
 
 receiver:
   host: "localhost"

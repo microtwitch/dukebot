@@ -1,10 +1,15 @@
 package de.com.fdm.bot;
 
-import de.com.fdm.grpc.lib.TwitchMessage;
+import de.com.fdm.grpc.receiver.lib.TwitchMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MessageHandler {
+    @Autowired
+    private CommandHandler commandHandler;
 
-    public static void handleMessage(TwitchMessage msg) {
+    public void handleMessage(TwitchMessage msg) {
         if (!msg.getName().equals("matthewde")) {
             return;
         }
@@ -13,7 +18,7 @@ public class MessageHandler {
             return;
         }
 
-        Command cmd = Command.parseMessage(msg);
-        CommandHandler.handleCommand(cmd);
+        PingCommand cmd = PingCommand.parseMessage(msg);
+        this.commandHandler.handleCommand(cmd);
     }
 }

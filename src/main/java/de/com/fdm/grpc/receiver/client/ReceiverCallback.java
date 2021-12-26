@@ -1,9 +1,10 @@
-package de.com.fdm.grpc.client;
+package de.com.fdm.grpc.receiver.client;
 
-import de.com.fdm.grpc.lib.Empty;
+
+import de.com.fdm.grpc.receiver.lib.Empty;
 import io.grpc.stub.StreamObserver;
 
-public class EmptyCallback implements StreamObserver<Empty> {
+public class ReceiverCallback implements StreamObserver<Empty> {
     @Override
     public void onNext(Empty value) {
     }

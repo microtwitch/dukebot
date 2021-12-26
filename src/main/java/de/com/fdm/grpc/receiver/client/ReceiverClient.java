@@ -1,10 +1,12 @@
-package de.com.fdm.grpc.client;
+package de.com.fdm.grpc.receiver.client;
 
-import de.com.fdm.grpc.lib.ReceiverGrpc;
-import de.com.fdm.grpc.lib.Registration;
+import de.com.fdm.grpc.receiver.lib.ReceiverGrpc;
+import de.com.fdm.grpc.receiver.lib.Registration;
+import io.grpc.Context;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,7 +14,8 @@ public class ReceiverClient {
     private final ReceiverGrpc.ReceiverStub asyncStub;
 
     @Autowired
-    public ReceiverClient(String receiverHost, int receiverPort) {
+    public ReceiverClient(@Qualifier("receiverHost") String receiverHost,
+                          @Qualifier("receiverPort") int receiverPort) {
         this(ManagedChannelBuilder.forAddress(receiverHost, receiverPort)
                 .usePlaintext());
     }
@@ -23,6 +26,6 @@ public class ReceiverClient {
     }
 
     public void register(Registration registration) {
-        this.asyncStub.register(registration, new EmptyCallback());
+        this.asyncStub.register(registration, new ReceiverCallback());
     }
 }
