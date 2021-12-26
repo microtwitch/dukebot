@@ -20,4 +20,8 @@ public abstract class Command {
     public String getChannel() {
         return this.channel;
     }
+
+    public List<String> getArgs() {
+        return this.args;
+    }
 }

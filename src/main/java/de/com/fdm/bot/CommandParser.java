@@ -1,6 +1,7 @@
 package de.com.fdm.bot;
 
 import de.com.fdm.bot.commands.Command;
+import de.com.fdm.bot.commands.HttpStatusCommand;
 import de.com.fdm.bot.commands.PingCommand;
 import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.grpc.receiver.lib.TwitchMessage;
@@ -17,6 +18,9 @@ public class CommandParser {
 
         if (identifier.equals("ping")) {
             return new PingCommand(identifier, msg.getChannel(), msg.getName(), args);
+        }
+        if (identifier.equals("httpstatus")) {
+            return new HttpStatusCommand(identifier, msg.getChannel(), msg.getName(), args);
         }
 
         return new UnkownCommand(identifier, msg.getChannel(), msg.getName(), args);
