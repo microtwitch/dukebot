@@ -1,0 +1,10 @@
+grpc:
+  server:
+    port: 8080
+
+bot:
+  host: "localhost"
+
+receiver:
+  host: "localhost"
+  port: 9090
