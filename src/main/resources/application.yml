@@ -4,6 +4,9 @@ grpc:
 
 bot:
   host: "localhost"
+  channels: >
+      "matthewde"
+      "gopherobot"
 
 receiver:
   host: "localhost"

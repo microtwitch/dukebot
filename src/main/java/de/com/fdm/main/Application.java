@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+
 
 @SpringBootApplication(scanBasePackages = {"de.com.fdm.grpc.service",
         "de.com.fdm.grpc.client",
@@ -30,13 +30,8 @@ public class Application {
 
     @EventListener(ApplicationReadyEvent.class)
     public void joinChannels() {
-        List<String> channels = new ArrayList<>();
-
-        channels.add("matthewde");
-        channels.add("gopherobot");
-
         Registration registration = Registration.newBuilder()
-                .addAllChannels(channels)
+                .addAllChannels(Arrays.stream(config.getBotChannels()).toList())
                 .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
                 .build();
 
