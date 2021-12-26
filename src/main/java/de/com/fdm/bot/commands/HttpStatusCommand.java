@@ -12,7 +12,7 @@ public class HttpStatusCommand extends Command {
     @Override
     public String execute() {
         if (this.getArgs().size() == 0) {
-            return "No status codep rovided";
+            return "No status code provided";
         }
 
         int statusCode;

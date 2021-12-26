@@ -31,6 +31,7 @@ dependencies {
             branch = 'master'
         }
     }
+    implementation("com.github.twitch4j:twitch4j:1.7.0")
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }

@@ -10,6 +10,9 @@ public class MessageHandler {
     @Autowired
     private CommandHandler commandHandler;
 
+    @Autowired
+    private CommandParser commandParser;
+
     public void handleMessage(TwitchMessage msg) {
         if (!msg.getName().equals("matthewde")) {
             return;
@@ -19,7 +22,7 @@ public class MessageHandler {
             return;
         }
 
-        Command cmd = CommandParser.parseMessage(msg);
+        Command cmd = this.commandParser.parseMessage(msg);
         this.commandHandler.handleCommand(cmd);
     }
 }
