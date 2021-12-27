@@ -32,6 +32,10 @@ public class CommandParser {
             return new UserIdCommand(identifier, msg.getChannel(), msg.getName(), args, twitchApiProvider);
         }
 
+        if (identifier.equals("user")) {
+            return new IdUserCommand(identifier, msg.getChannel(), msg.getName(), args, twitchApiProvider);
+        }
+
         return new UnkownCommand(identifier, msg.getChannel(), msg.getName(), args);
     }
 }

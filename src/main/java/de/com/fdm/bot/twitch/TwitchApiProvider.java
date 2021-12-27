@@ -45,4 +45,26 @@ public class TwitchApiProvider {
 
         return users.get(0).getId();
     }
+
+    public String getUserName(String userId) {
+        UserList userList;
+        try {
+            userList = client
+                    .getHelix()
+                    .getUsers(this.config.getBotAuth(), List.of(userId), null)
+                    .execute();
+        } catch (HystrixRuntimeException e) {
+            return "User not found";
+        }
+
+
+
+        List<User> users = userList.getUsers();
+        if (users.size() == 0) {
+            return "User not found";
+        }
+
+        return users.get(0).getDisplayName();
+
+    }
 }
