@@ -13,16 +13,19 @@ import java.util.List;
 
 @Component
 public class TwitchApiProvider {
+    private final TwitchClient client;
+
+    public TwitchApiProvider() {
+        this.client = TwitchClientBuilder
+                .builder()
+                .withEnableHelix(true)
+                .build();
+    }
 
     @Autowired
     private ConfigProperties config;
 
     public String getUserId(String userName) {
-        TwitchClient client = TwitchClientBuilder
-                .builder()
-                .withEnableHelix(true)
-                .build();
-
         UserList userList;
         try {
             userList = client
@@ -32,6 +35,8 @@ public class TwitchApiProvider {
         } catch (HystrixRuntimeException e) {
            return "User not found";
         }
+
+
 
         List<User> users = userList.getUsers();
         if (users.size() == 0) {
