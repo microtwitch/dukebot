@@ -4,5 +4,8 @@ sourceControl {
     gitRepository("https://github.com/microtwitch/TmiReceiverInterface.git") {
         producesModule("de.com.fdm:TmiReceiverInterface")
     }
+    gitRepository("https://github.com/microtwitch/microsub-interface.git") {
+        producesModule("de.com.fdm:microsub-interface")
+    }
 }
 

@@ -36,8 +36,6 @@ public class TwitchApiProvider {
            return "User not found";
         }
 
-
-
         List<User> users = userList.getUsers();
         if (users.size() == 0) {
             return "Not found";

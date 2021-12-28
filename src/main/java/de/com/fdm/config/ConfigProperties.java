@@ -33,6 +33,12 @@ public class ConfigProperties {
     @Value("${dispatcher.port}")
     private int dispatcherPort;
 
+    @Value("${microsub.host}")
+    private String microsubHost;
+
+    @Value("${microsub.port}")
+    private int microsubPort;
+
     public String getBotHost() {
         return botHost;
     }
@@ -107,5 +113,23 @@ public class ConfigProperties {
 
     public void setDispatcherPort(int dispatcherPort) {
         this.dispatcherPort = dispatcherPort;
+    }
+
+    @Bean("microsubHost")
+    public String getMicrosubHost() {
+        return microsubHost;
+    }
+
+    public void setMicrosubHost(String microsubHost) {
+        this.microsubHost = microsubHost;
+    }
+
+    @Bean("microsubPort")
+    public int getMicrosubPort() {
+        return microsubPort;
+    }
+
+    public void setMicrosubPort(int microsubPort) {
+        this.microsubPort = microsubPort;
     }
 }
