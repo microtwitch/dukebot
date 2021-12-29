@@ -11,6 +11,7 @@ import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.bot.commands.UserIdCommand;
 import de.com.fdm.bot.twitch.TwitchApiProvider;
 import de.com.fdm.config.ConfigProperties;
+import de.com.fdm.grpc.microsub.MicrosubService;
 import de.com.fdm.grpc.microsub.client.MicrosubClient;
 import de.com.fdm.grpc.receiver.ReceiverService;
 import de.com.fdm.grpc.receiver.lib.TwitchMessage;
@@ -39,6 +40,9 @@ public class CommandParser {
     @Autowired
     private ReceiverService receiverService;
 
+    @Autowired
+    private MicrosubService microsubService;
+
 
     public Command parseMessage(TwitchMessage msg) {
         String text = msg.getText().substring(1);
@@ -55,31 +59,19 @@ public class CommandParser {
         }
 
         if (identifier.equals("user")) {
-            return new UserIdCommand(msg.getChannel(), args, this.twitchApiProvider);
+            return new UserIdCommand(msg.getChannel(), args, twitchApiProvider);
         }
 
         if (identifier.equals("id")) {
-            return new IdUserCommand(msg.getChannel(), args, this.twitchApiProvider);
+            return new IdUserCommand(msg.getChannel(), args, twitchApiProvider);
         }
 
         if (identifier.equals("addfollowalert")) {
-            return new AddFollowAlertCommand(
-                    msg.getChannel(),
-                    args,
-                    this.microsubClient,
-                    this.config,
-                    this.twitchApiProvider,
-                    this.microSubRepository);
+            return new AddFollowAlertCommand(msg.getChannel(), args, microsubService);
         }
 
         if (identifier.equals("removefollowalert")) {
-            return new RemoveFollowAlertCommand(
-                    msg.getChannel(),
-                    args,
-                    this.microsubClient,
-                    this.config,
-                    this.twitchApiProvider,
-                    this.microSubRepository);
+            return new RemoveFollowAlertCommand(msg.getChannel(), args, microsubService);
         }
 
         if (identifier.equals("tmpjoin")) {

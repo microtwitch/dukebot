@@ -1,33 +1,15 @@
 package de.com.fdm.bot.commands;
 
-import de.com.fdm.bot.twitch.TwitchApiProvider;
-import de.com.fdm.config.ConfigProperties;
-import de.com.fdm.grpc.microsub.client.MicrosubClient;
-import de.com.fdm.grpc.microsub.lib.Registration;
-import de.com.fdm.mongo.MicroSub;
-import de.com.fdm.mongo.MicroSubRepository;
+import de.com.fdm.grpc.microsub.MicrosubService;
 
 import java.util.List;
 
 public class AddFollowAlertCommand extends ArgsCommand {
-    private final MicrosubClient microsubClient;
-    private final ConfigProperties config;
-    private final TwitchApiProvider twitchApiProvider;
-    private final MicroSubRepository microSubRepository;
+    private final MicrosubService microsubService;
 
-    public AddFollowAlertCommand(String channel,
-                                 List<String> args,
-                                 MicrosubClient microsubClient,
-                                 ConfigProperties config,
-                                 TwitchApiProvider twitchApiProvider,
-                                 MicroSubRepository microSubRepository) {
-
+    public AddFollowAlertCommand(String channel, List<String> args, MicrosubService microsubService) {
         super(channel, args);
-
-        this.microsubClient = microsubClient;
-        this.config = config;
-        this.twitchApiProvider = twitchApiProvider;
-        this.microSubRepository = microSubRepository;
+        this.microsubService = microsubService;
     }
 
     @Override
@@ -36,16 +18,7 @@ public class AddFollowAlertCommand extends ArgsCommand {
             return "No channel provided";
         }
 
-        String id = this.twitchApiProvider.getUserId(this.getArgs().get(0));
-        this.microSubRepository.save(new MicroSub(this.getChannel(), id));
-
-        Registration registration  = Registration.newBuilder()
-                .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
-                .setId(id)
-                .build();
-
-        this.microsubClient.register(registration);
-
+        this.microsubService.register(this.getChannel(), this.getArgs().get(0));
         return "Success";
     }
 }

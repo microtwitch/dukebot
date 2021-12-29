@@ -1,4 +1,4 @@
-package de.com.fdm.grpc.microsub.service;
+package de.com.fdm.grpc.microsub.consumer;
 
 import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.grpc.dispatcher.DispatcherClient;
@@ -43,13 +43,10 @@ public class MicrosubConsumerServiceImpl extends ConsumerGrpc.ConsumerImplBase {
                         .build();
 
                 ctx.run(() -> this.dispatcherClient.send(msg));
-
             }
         }
 
-
         Empty response = Empty.newBuilder().build();
-
         responseOvserver.onNext(response);
         responseOvserver.onCompleted();
     }

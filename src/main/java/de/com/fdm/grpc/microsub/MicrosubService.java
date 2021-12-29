@@ -1,0 +1,61 @@
+package de.com.fdm.grpc.microsub;
+
+import de.com.fdm.bot.twitch.TwitchApiProvider;
+import de.com.fdm.config.ConfigProperties;
+import de.com.fdm.grpc.microsub.client.MicrosubClient;
+import de.com.fdm.grpc.microsub.lib.Deletion;
+import de.com.fdm.grpc.microsub.lib.Registration;
+import de.com.fdm.mongo.MicroSub;
+import de.com.fdm.mongo.MicroSubRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class MicrosubService {
+
+    @Autowired
+    private TwitchApiProvider twitchApiProvider;
+
+    @Autowired
+    private MicroSubRepository microSubRepository;
+
+    @Autowired
+    private ConfigProperties config;
+
+    @Autowired
+    private MicrosubClient microsubClient;
+
+    public void register(String target, String channel) {
+
+        String id = this.twitchApiProvider.getUserId(target);
+        this.microSubRepository.save(new MicroSub(channel, id));
+
+        Registration registration  = Registration.newBuilder()
+                .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
+                .setId(id)
+                .build();
+
+        this.microsubClient.register(registration);
+    }
+
+    public void delete(String target, String channel) {
+        String broadcasterUserID = this.twitchApiProvider.getUserId(target);
+
+        List<MicroSub> microSubs = this.microSubRepository.findAllByBroadcasterUserId(broadcasterUserID);
+
+        for (MicroSub microSub : microSubs) {
+            if (microSub.getChannel().equals(channel)) {
+                this.microSubRepository.deleteById(microSub.get_id().toString());
+            }
+        }
+
+        Deletion deletion = Deletion.newBuilder()
+                .setId(broadcasterUserID)
+                .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
+                .build();
+
+        this.microsubClient.delete(deletion);
+    }
+}
