@@ -1,27 +1,16 @@
 package de.com.fdm.bot.commands;
 
-import java.util.List;
 
 public abstract class Command {
-    private final String identifier;
-    private final String channel;
-    private final String user;
-    private final List<String> args;
+    private String channel;
 
-    public Command(String identifier, String channel, String user, List<String> args) {
-        this.identifier = identifier;
+    public Command(String channel) {
         this.channel = channel;
-        this.user = user;
-        this.args = args;
+    }
+
+    public String getChannel() {
+        return channel;
     }
 
     public abstract String execute();
-
-    public String getChannel() {
-        return this.channel;
-    }
-
-    public List<String> getArgs() {
-        return this.args;
-    }
 }

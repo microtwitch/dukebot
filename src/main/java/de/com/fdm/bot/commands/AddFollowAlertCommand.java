@@ -9,22 +9,20 @@ import de.com.fdm.mongo.MicroSubRepository;
 
 import java.util.List;
 
-public class AddFollowAlertCommand extends Command {
+public class AddFollowAlertCommand extends ArgsCommand {
     private final MicrosubClient microsubClient;
     private final ConfigProperties config;
     private final TwitchApiProvider twitchApiProvider;
     private final MicroSubRepository microSubRepository;
 
-    public AddFollowAlertCommand(String identifier,
-                                 String channel,
-                                 String user,
+    public AddFollowAlertCommand(String channel,
                                  List<String> args,
                                  MicrosubClient microsubClient,
                                  ConfigProperties config,
                                  TwitchApiProvider twitchApiProvider,
                                  MicroSubRepository microSubRepository) {
 
-        super(identifier, channel, user, args);
+        super(channel, args);
 
         this.microsubClient = microsubClient;
         this.config = config;

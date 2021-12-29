@@ -4,11 +4,11 @@ import de.com.fdm.bot.twitch.TwitchApiProvider;
 
 import java.util.List;
 
-public class UserIdCommand extends Command {
+public class UserIdCommand extends ArgsCommand {
     private final TwitchApiProvider twitchApiProvider;
 
-    public UserIdCommand(String identifier, String channel, String user, List<String> args, TwitchApiProvider twitchApiProvider) {
-        super(identifier, channel, user, args);
+    public UserIdCommand(String channel, List<String> args, TwitchApiProvider twitchApiProvider) {
+        super(channel, args);
         this.twitchApiProvider = twitchApiProvider;
     }
 
@@ -19,8 +19,6 @@ public class UserIdCommand extends Command {
         }
 
         String userName = this.getArgs().get(0);
-
-
         String userId = this.twitchApiProvider.getUserId(userName);
 
         return String.format("%s -> %s", userName, userId);

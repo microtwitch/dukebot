@@ -1,6 +1,13 @@
 package de.com.fdm.bot;
 
-import de.com.fdm.bot.commands.*;
+import de.com.fdm.bot.commands.AddFollowAlertCommand;
+import de.com.fdm.bot.commands.Command;
+import de.com.fdm.bot.commands.HttpStatusCommand;
+import de.com.fdm.bot.commands.IdUserCommand;
+import de.com.fdm.bot.commands.PingCommand;
+import de.com.fdm.bot.commands.RemoveFollowAlertCommand;
+import de.com.fdm.bot.commands.UnkownCommand;
+import de.com.fdm.bot.commands.UserIdCommand;
 import de.com.fdm.bot.twitch.TwitchApiProvider;
 import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.grpc.microsub.client.MicrosubClient;
@@ -35,38 +42,41 @@ public class CommandParser {
         List<String> args = Arrays.stream(chunks).toList().subList(1, chunks.length);
 
         if (identifier.equals("ping")) {
-            return new PingCommand(identifier, msg.getChannel(), msg.getName(), args);
-        }
-        if (identifier.equals("httpstatus")) {
-            return new HttpStatusCommand(identifier, msg.getChannel(), msg.getName(), args);
-        }
-        if (identifier.equals("id")) {
-            return new UserIdCommand(identifier, msg.getChannel(), msg.getName(), args, twitchApiProvider);
-        }
-        if (identifier.equals("user")) {
-            return new IdUserCommand(identifier, msg.getChannel(), msg.getName(), args, twitchApiProvider);
-        }
-        if (identifier.equals("addfollowalert")) {
-            return new AddFollowAlertCommand(identifier,
-                    msg.getChannel(),
-                    msg.getName(),
-                    args,
-                    microsubClient,
-                    config,
-                    twitchApiProvider,
-                    microSubRepository);
-        }
-        if (identifier.equals("removefollowalert")) {
-            return new RemoveFollowAlertCommand(identifier,
-                    msg.getChannel(),
-                    msg.getName(),
-                    args,
-                    microsubClient,
-                    config,
-                    twitchApiProvider,
-                    microSubRepository);
+            return new PingCommand(msg.getChannel());
         }
 
-        return new UnkownCommand(identifier, msg.getChannel(), msg.getName(), args);
+        if (identifier.equals("httpstatus")) {
+            return new HttpStatusCommand(msg.getChannel(), args);
+        }
+
+        if (identifier.equals("user")) {
+            return new UserIdCommand(msg.getChannel(), args, this.twitchApiProvider);
+        }
+
+        if (identifier.equals("id")) {
+            return new IdUserCommand(msg.getChannel(), args, this.twitchApiProvider);
+        }
+
+        if (identifier.equals("addfollowalert")) {
+            return new AddFollowAlertCommand(
+                    msg.getChannel(),
+                    args,
+                    this.microsubClient,
+                    this.config,
+                    this.twitchApiProvider,
+                    this.microSubRepository);
+        }
+
+        if (identifier.equals("removefollowalert")) {
+            return new RemoveFollowAlertCommand(
+                    msg.getChannel(),
+                    args,
+                    this.microsubClient,
+                    this.config,
+                    this.twitchApiProvider,
+                    this.microSubRepository);
+        }
+
+        return new UnkownCommand(msg.getChannel());
     }
 }

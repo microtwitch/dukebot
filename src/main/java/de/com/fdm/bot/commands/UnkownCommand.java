@@ -1,10 +1,9 @@
 package de.com.fdm.bot.commands;
 
-import java.util.List;
 
 public class UnkownCommand extends Command {
-    public UnkownCommand(String identifier, String channel, String user, List<String> args) {
-        super(identifier, channel, user, args);
+    public UnkownCommand(String channel) {
+        super(channel);
     }
 
     @Override
