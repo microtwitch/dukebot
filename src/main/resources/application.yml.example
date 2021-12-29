@@ -8,8 +8,23 @@ bot:
       matthewde,
       gopherobot
   name: "gopherobot"
-  auth: "secret"
+  auth: "supasecret"
 
 receiver:
   host: "localhost"
   port: 9090
+
+dispatcher:
+  host: "localhost"
+  port: 7070
+
+microsub:
+  host: "localhost"
+  port: 5050
+
+spring:
+  datasource:
+    platform: postgres
+    url: "jdbc:postgresql://localhost:5432/microtwitch"
+    username: test
+    password: test
