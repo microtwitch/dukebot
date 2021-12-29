@@ -4,23 +4,21 @@ import io.grpc.netty.shaded.io.netty.handler.codec.http.HttpResponseStatus;
 
 import java.util.List;
 
-public class HttpStatusCommand extends Command {
-    private final List<String> args;
+public class HttpStatusCommand extends ArgsCommand {
 
     public HttpStatusCommand(String channel, List<String> args) {
-        super(channel);
-        this.args = args;
+        super(channel, args);
     }
 
     @Override
     public String execute() {
-        if (this.args.size() == 0) {
+        if (this.getArgs().size() == 0) {
             return "No status code provided";
         }
 
         int statusCode;
         try {
-            statusCode = Integer.parseInt(this.args.get(0));
+            statusCode = Integer.parseInt(this.getArgs().get(0));
         } catch (NumberFormatException e) {
             return "Not a valid status code";
         }
