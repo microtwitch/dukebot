@@ -6,11 +6,13 @@ import de.com.fdm.bot.commands.HttpStatusCommand;
 import de.com.fdm.bot.commands.IdUserCommand;
 import de.com.fdm.bot.commands.PingCommand;
 import de.com.fdm.bot.commands.RemoveFollowAlertCommand;
+import de.com.fdm.bot.commands.TmpJoinCommand;
 import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.bot.commands.UserIdCommand;
 import de.com.fdm.bot.twitch.TwitchApiProvider;
 import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.grpc.microsub.client.MicrosubClient;
+import de.com.fdm.grpc.receiver.ReceiverService;
 import de.com.fdm.grpc.receiver.lib.TwitchMessage;
 import de.com.fdm.mongo.MicroSubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class CommandParser {
 
     @Autowired
     private MicroSubRepository microSubRepository;
+
+    @Autowired
+    private ReceiverService receiverService;
 
 
     public Command parseMessage(TwitchMessage msg) {
@@ -75,6 +80,10 @@ public class CommandParser {
                     this.config,
                     this.twitchApiProvider,
                     this.microSubRepository);
+        }
+
+        if (identifier.equals("tmpjoin")) {
+            return new TmpJoinCommand(msg.getChannel(), args, this.receiverService);
         }
 
         return new UnkownCommand(msg.getChannel());
