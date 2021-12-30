@@ -1,23 +1,39 @@
-package de.com.fdm.mongo;
+package de.com.fdm.db.data;
 
-import org.bson.types.ObjectId;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "microsub")
 public class MicroSub {
-    private ObjectId _id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "microsub_id")
+    private Long id;
+
     private String channel;
+
+    @Column(name = "broadcaster_user_id")
     private String broadcasterUserId;
+
+    public MicroSub() {}
 
     public MicroSub(String channel, String broadcasterUserId) {
         this.channel = channel;
         this.broadcasterUserId = broadcasterUserId;
     }
 
-    public ObjectId get_id() {
-        return _id;
+    public Long getId() {
+        return id;
     }
 
-    public void set_id(ObjectId _id) {
-        this._id = _id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getChannel() {

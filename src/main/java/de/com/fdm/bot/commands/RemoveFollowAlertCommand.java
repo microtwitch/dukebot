@@ -18,7 +18,7 @@ public class RemoveFollowAlertCommand extends ArgsCommand {
             return "No channel provided";
         }
 
-        microsubService.delete(this.getArgs().get(0), this.getChannel());
+        microsubService.delete(this.getChannel(), this.getArgs().get(0));
         return "Success";
     }
 }

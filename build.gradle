@@ -26,7 +26,9 @@ jar {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter:${springBootVersion}")
     implementation('net.devh:grpc-server-spring-boot-starter:2.13.0.RELEASE')
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+    implementation('org.postgresql:postgresql:42.3.1')
+    implementation('javax.xml.bind:jaxb-api:2.4.0-b180830.0359')
     implementation('de.com.fdm:TmiReceiverInterface') {
         version {
             branch = 'master'

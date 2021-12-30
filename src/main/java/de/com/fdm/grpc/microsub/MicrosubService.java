@@ -5,8 +5,8 @@ import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.grpc.microsub.client.MicrosubClient;
 import de.com.fdm.grpc.microsub.lib.Deletion;
 import de.com.fdm.grpc.microsub.lib.Registration;
-import de.com.fdm.mongo.MicroSub;
-import de.com.fdm.mongo.MicroSubRepository;
+import de.com.fdm.db.data.MicroSub;
+import de.com.fdm.db.repositories.MicroSubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class MicrosubService {
     @Autowired
     private MicrosubClient microsubClient;
 
-    public void register(String target, String channel) {
+    public void register(String channel, String target) {
 
         String id = this.twitchApiProvider.getUserId(target);
         this.microSubRepository.save(new MicroSub(channel, id));
@@ -40,14 +40,14 @@ public class MicrosubService {
         this.microsubClient.register(registration);
     }
 
-    public void delete(String target, String channel) {
+    public void delete(String channel, String target) {
         String broadcasterUserID = this.twitchApiProvider.getUserId(target);
 
         List<MicroSub> microSubs = this.microSubRepository.findAllByBroadcasterUserId(broadcasterUserID);
 
         for (MicroSub microSub : microSubs) {
             if (microSub.getChannel().equals(channel)) {
-                this.microSubRepository.deleteById(microSub.get_id().toString());
+                this.microSubRepository.deleteById(microSub.getId());
             }
         }
 

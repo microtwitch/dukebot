@@ -15,7 +15,6 @@ import de.com.fdm.grpc.microsub.MicrosubService;
 import de.com.fdm.grpc.microsub.client.MicrosubClient;
 import de.com.fdm.grpc.receiver.ReceiverService;
 import de.com.fdm.grpc.receiver.lib.TwitchMessage;
-import de.com.fdm.mongo.MicroSubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,9 +32,6 @@ public class CommandParser {
 
     @Autowired
     private MicrosubClient microsubClient;
-
-    @Autowired
-    private MicroSubRepository microSubRepository;
 
     @Autowired
     private ReceiverService receiverService;
@@ -58,11 +54,11 @@ public class CommandParser {
             return new HttpStatusCommand(msg.getChannel(), args);
         }
 
-        if (identifier.equals("user")) {
+        if (identifier.equals("id")) {
             return new UserIdCommand(msg.getChannel(), args, twitchApiProvider);
         }
 
-        if (identifier.equals("id")) {
+        if (identifier.equals("user")) {
             return new IdUserCommand(msg.getChannel(), args, twitchApiProvider);
         }
 
