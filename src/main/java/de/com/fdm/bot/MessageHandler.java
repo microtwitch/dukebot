@@ -1,12 +1,16 @@
 package de.com.fdm.bot;
 
 import de.com.fdm.bot.commands.Command;
+import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.grpc.receiver.lib.TwitchMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MessageHandler {
+    @Autowired
+    private ConfigProperties config;
+
     @Autowired
     private CommandHandler commandHandler;
 
@@ -18,7 +22,7 @@ public class MessageHandler {
             return;
         }
 
-        if (!msg.getText().startsWith(",")) {
+        if (!msg.getText().startsWith(config.getBotPrefix())) {
             return;
         }
 

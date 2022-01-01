@@ -18,6 +18,9 @@ public class ConfigProperties {
     @Value("${bot.auth}")
     private String botAuth;
 
+    @Value("${bot.prefix}")
+    private String botPrefix;
+
     @Value("${grpc.server.port}")
     private int grpcPort;
 
@@ -73,6 +76,14 @@ public class ConfigProperties {
 
     public void setBotAuth(String botAuth) {
         this.botAuth = botAuth;
+    }
+
+    public String getBotPrefix() {
+        return botPrefix;
+    }
+
+    public void setBotPrefix(String botPrefix) {
+        this.botPrefix = botPrefix;
     }
 
     @Bean("receiverHost")
