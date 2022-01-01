@@ -7,6 +7,7 @@ import de.com.fdm.bot.commands.IdUserCommand;
 import de.com.fdm.bot.commands.PingCommand;
 import de.com.fdm.bot.commands.RemoveFollowAlertCommand;
 import de.com.fdm.bot.commands.TmpJoinCommand;
+import de.com.fdm.bot.commands.TmpPartCommand;
 import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.bot.commands.UserIdCommand;
 import de.com.fdm.bot.twitch.TwitchApiProvider;
@@ -72,6 +73,10 @@ public class CommandParser {
 
         if (identifier.equals("tmpjoin")) {
             return new TmpJoinCommand(msg.getChannel(), args, this.receiverService);
+        }
+
+        if (identifier.equals("tmppart")) {
+            return new TmpPartCommand(msg.getChannel(), args, this.receiverService);
         }
 
         return new UnkownCommand(msg.getChannel());

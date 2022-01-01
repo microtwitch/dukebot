@@ -17,7 +17,6 @@ public class ReceiverService {
     private ReceiverClient receiverClient;
 
     public void joinChannel(String channel) {
-
         Registration registration = Registration.newBuilder()
                 .addChannels(channel)
                 .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
@@ -27,12 +26,20 @@ public class ReceiverService {
     }
 
     public void joinInitialChannels() {
-
         Registration registration = Registration.newBuilder()
                 .addAllChannels(Arrays.stream(config.getBotChannels()).toList())
                 .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
                 .build();
 
         receiverClient.register(registration);
+    }
+
+    public void partChannel(String channel) {
+        Registration registration = Registration.newBuilder()
+                .addChannels(channel)
+                .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
+                .build();
+
+        receiverClient.unsubscribe(registration);
     }
 }
