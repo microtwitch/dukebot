@@ -5,7 +5,6 @@ import io.grpc.netty.shaded.io.netty.handler.codec.http.HttpResponseStatus;
 import java.util.List;
 
 public class HttpStatusCommand extends ArgsCommand {
-
     public HttpStatusCommand(String channel, List<String> args) {
         super(channel, args);
     }

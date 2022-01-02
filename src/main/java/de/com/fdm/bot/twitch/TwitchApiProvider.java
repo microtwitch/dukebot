@@ -33,12 +33,12 @@ public class TwitchApiProvider {
                     .getUsers(this.config.getBotAuth(), null, List.of(userName))
                     .execute();
         } catch (HystrixRuntimeException e) {
-           return "User not found";
+            return null;
         }
 
         List<User> users = userList.getUsers();
         if (users.size() == 0) {
-            return "Not found";
+            return null;
         }
 
         return users.get(0).getId();

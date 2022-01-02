@@ -3,6 +3,7 @@ package de.com.fdm.bot.commands;
 import de.com.fdm.bot.twitch.TwitchApiProvider;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UserIdCommand extends ArgsCommand {
     private final TwitchApiProvider twitchApiProvider;
@@ -21,6 +22,6 @@ public class UserIdCommand extends ArgsCommand {
         String userName = this.getArgs().get(0);
         String userId = this.twitchApiProvider.getUserId(userName);
 
-        return String.format("%s -> %s", userName, userId);
+        return String.format("%s -> %s", userName, Objects.requireNonNullElse(userId, "user not found"));
     }
 }
