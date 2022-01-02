@@ -20,4 +20,4 @@ CREATE TABLE twitch_user (
     user_level user_level NOT NULL
 );
 
-INSERT INTO twitch_user VALUES (1, '116672490', 'OWNER');
+INSERT INTO twitch_user VALUES (0, '116672490', 'OWNER');
