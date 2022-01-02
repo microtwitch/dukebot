@@ -1,10 +1,12 @@
 package de.com.fdm.bot.commands;
 
+import de.com.fdm.bot.access.UserLevel;
 import io.grpc.netty.shaded.io.netty.handler.codec.http.HttpResponseStatus;
 
 import java.util.List;
 
 public class HttpStatusCommand extends ArgsCommand {
+    private final UserLevel level = UserLevel.PLEB;
     public HttpStatusCommand(String channel, List<String> args) {
         super(channel, args);
     }
@@ -28,5 +30,9 @@ public class HttpStatusCommand extends ArgsCommand {
         }
 
         return String.format("%s https://http.cat/%s", statusCodeText, statusCode);
+    }
+
+    public UserLevel getLevel() {
+        return this.level;
     }
 }
