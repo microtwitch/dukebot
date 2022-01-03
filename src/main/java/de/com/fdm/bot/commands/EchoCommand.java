@@ -8,10 +8,12 @@ public class EchoCommand extends MessageCommand {
 
     @Override
     public String execute() {
-        if (getMessage().isBlank()) {
+        String content = getMessage().substring(0, 5);
+
+        if (content.isBlank()) {
             return "No message provided";
         }
 
-        return getMessage();
+        return content;
     }
 }
