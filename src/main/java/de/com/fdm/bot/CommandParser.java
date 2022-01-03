@@ -3,6 +3,7 @@ package de.com.fdm.bot;
 import de.com.fdm.bot.commands.AddFollowAlertCommand;
 import de.com.fdm.bot.commands.AddTwitchUserCommand;
 import de.com.fdm.bot.commands.Command;
+import de.com.fdm.bot.commands.EchoCommand;
 import de.com.fdm.bot.commands.HttpStatusCommand;
 import de.com.fdm.bot.commands.IdUserCommand;
 import de.com.fdm.bot.commands.PingCommand;
@@ -90,6 +91,10 @@ public class CommandParser {
 
         if (identifier.equals("removeuser")) {
             return new RemoveTwitchUserCommand(msg.getChannel(), args, this.twitchApiProvider, this.userService);
+        }
+
+        if (identifier.equals("echo")) {
+            return new EchoCommand(msg.getChannel(), msg.getText());
         }
 
         return new UnkownCommand(msg.getChannel());
