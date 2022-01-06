@@ -7,6 +7,7 @@ import de.com.fdm.grpc.microsub.lib.Deletion;
 import de.com.fdm.grpc.microsub.lib.Registration;
 import de.com.fdm.db.data.MicroSub;
 import de.com.fdm.db.repositories.MicroSubRepository;
+import de.com.fdm.grpc.microsub.lib.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,7 @@ public class MicrosubService {
 
         Registration registration  = Registration.newBuilder()
                 .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
+                .setType(Type.FOLLOW)
                 .setId(id)
                 .build();
 
@@ -53,6 +55,7 @@ public class MicrosubService {
 
         Deletion deletion = Deletion.newBuilder()
                 .setId(broadcasterUserID)
+                .setType(Type.FOLLOW)
                 .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
                 .build();
 
