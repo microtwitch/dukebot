@@ -15,7 +15,6 @@ import java.util.List;
 
 @Service
 public class MicrosubService {
-
     @Autowired
     private TwitchApiProvider twitchApiProvider;
 
@@ -28,7 +27,7 @@ public class MicrosubService {
     @Autowired
     private MicrosubClient microsubClient;
 
-    public void register(String channel, String target) {
+    public void registerFollowalert(String channel, String target) {
 
         String id = this.twitchApiProvider.getUserId(target);
         this.microSubRepository.save(new MicroSub(channel, id));
@@ -42,7 +41,7 @@ public class MicrosubService {
         this.microsubClient.register(registration);
     }
 
-    public void delete(String channel, String target) {
+    public void deleteFollowalert(String channel, String target) {
         String broadcasterUserID = this.twitchApiProvider.getUserId(target);
 
         List<MicroSub> microSubs = this.microSubRepository.findAllByBroadcasterUserId(broadcasterUserID);
@@ -60,5 +59,22 @@ public class MicrosubService {
                 .build();
 
         this.microsubClient.delete(deletion);
+    }
+
+    public void registerTurtoiseAlerts() {
+        Registration registrationFollow = Registration.newBuilder()
+                .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
+                .setType(Type.FOLLOW)
+                .setId("80805824")
+                .build();
+
+        Registration registrationSub = Registration.newBuilder()
+                .setCallback(config.getBotHost() + ":" + config.getGrpcPort())
+                .setType(Type.SUB)
+                .setId("80805824")
+                .build();
+
+        microsubClient.register(registrationFollow);
+        microsubClient.register(registrationSub);
     }
 }

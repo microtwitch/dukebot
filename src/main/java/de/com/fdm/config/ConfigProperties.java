@@ -42,6 +42,9 @@ public class ConfigProperties {
     @Value("${microsub.port}")
     private int microsubPort;
 
+    @Value("${turtoise.auth}")
+    private String turtoiseAuth;
+
     public String getBotHost() {
         return botHost;
     }
@@ -142,5 +145,13 @@ public class ConfigProperties {
 
     public void setMicrosubPort(int microsubPort) {
         this.microsubPort = microsubPort;
+    }
+
+    public String getTurtoiseAuth() {
+        return turtoiseAuth;
+    }
+
+    public void setTurtoiseAuth(String turtoiseAuth) {
+        this.turtoiseAuth = turtoiseAuth;
     }
 }
