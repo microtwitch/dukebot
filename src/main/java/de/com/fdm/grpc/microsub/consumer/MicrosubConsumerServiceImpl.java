@@ -67,7 +67,13 @@ public class MicrosubConsumerServiceImpl extends ConsumerGrpc.ConsumerImplBase {
     }
 
     private void sendTurtoiseFollowAlert(EventsubMessage eventsubMessage) {
-        String text = String.format("PagChomp OH SHIT %s THANKS FOR THE FOLLOW", eventsubMessage.getEventUserName());
+        String text;
+        if (eventsubMessage.getIsGift()) {
+            text = String.format("PagChomp OH SHIT %s YOU JUST GOT GIFTED", eventsubMessage.getEventUserName());
+        } else {
+            text = String.format("PagChomp OH SHIT %s THANKS FOR THE FOLLOW", eventsubMessage.getEventUserName());
+        }
+
         OutboundMessage msg = OutboundMessage.newBuilder()
                 .setText(text)
                 .setChannel("turtoise")
