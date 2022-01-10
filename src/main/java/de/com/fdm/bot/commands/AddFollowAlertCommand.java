@@ -18,7 +18,7 @@ public class AddFollowAlertCommand extends ArgsCommand {
             return "No channel provided";
         }
 
-        this.microsubService.register(this.getChannel(), this.getArgs().get(0));
+        microsubService.registerFollowalert(this.getChannel(), this.getArgs().get(0));
         return "Success";
     }
 }

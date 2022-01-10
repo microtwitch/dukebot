@@ -1,6 +1,7 @@
 package de.com.fdm.main;
 
 
+import de.com.fdm.grpc.microsub.MicrosubService;
 import de.com.fdm.grpc.receiver.ReceiverService;
 import de.com.fdm.db.repositories.MicroSubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class Application {
     @Autowired
     private ReceiverService receiverService;
 
+    @Autowired
+    private MicrosubService microsubService;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -27,5 +31,10 @@ public class Application {
     @EventListener(ApplicationReadyEvent.class)
     public void joinChannels() {
         receiverService.joinInitialChannels();
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void addTurtoiseAlerts() {
+        microsubService.registerTurtoiseAlerts();
     }
 }
