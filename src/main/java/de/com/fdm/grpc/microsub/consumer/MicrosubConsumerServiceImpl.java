@@ -12,6 +12,8 @@ import de.com.fdm.grpc.microsub.lib.Type;
 import io.grpc.Context;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
@@ -21,6 +23,7 @@ import java.util.Map;
 
 @GrpcService
 public class MicrosubConsumerServiceImpl extends ConsumerGrpc.ConsumerImplBase {
+    Logger logger = LoggerFactory.getLogger(MicrosubConsumerServiceImpl.class);
     private final Map<String, Instant> userLastAlertTime;
 
     @Autowired
@@ -38,6 +41,7 @@ public class MicrosubConsumerServiceImpl extends ConsumerGrpc.ConsumerImplBase {
 
     @Override
     public void consume(EventsubMessage eventsubMessage, StreamObserver<Empty> responseOvserver) {
+        logger.info("Eventsub event received: {}", eventsubMessage);
         Context ctx = Context.current().fork();
 
         if (eventsubMessage.getBroadcasterUserId().equals("80805824")) {
