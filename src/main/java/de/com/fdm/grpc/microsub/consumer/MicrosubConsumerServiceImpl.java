@@ -96,9 +96,9 @@ public class MicrosubConsumerServiceImpl extends ConsumerGrpc.ConsumerImplBase {
     private void sendTurtoiseSubAlert(EventsubMessage eventsubMessage) {
         String text;
         if (eventsubMessage.getIsGift()) {
-            text = String.format("heCrazy YOOO %s THANKS FOR SUBBING!", eventsubMessage.getEventUserName());
-        } else {
             text = String.format("PagChomp OH SHIT %s YOU JUST GOT GIFTED!", eventsubMessage.getEventUserName());
+        } else {
+            text = String.format("heCrazy YOOO %s THANKS FOR SUBBING!", eventsubMessage.getEventUserName());
         }
         OutboundMessage msg = OutboundMessage.newBuilder()
                 .setText(text)
