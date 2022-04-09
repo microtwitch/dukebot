@@ -1,13 +1,13 @@
-package de.com.fdm.grpc.microsub;
+package de.com.fdm.microsub;
 
 import de.com.fdm.bot.twitch.TwitchApiProvider;
 import de.com.fdm.config.ConfigProperties;
-import de.com.fdm.grpc.microsub.client.MicrosubClient;
 import de.com.fdm.grpc.microsub.lib.Deletion;
 import de.com.fdm.grpc.microsub.lib.Registration;
 import de.com.fdm.db.data.MicroSub;
 import de.com.fdm.db.repositories.MicroSubRepository;
 import de.com.fdm.grpc.microsub.lib.Type;
+import de.com.fdm.microsub.client.MicrosubClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

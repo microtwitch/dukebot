@@ -1,9 +1,9 @@
 package de.com.fdm.main;
 
 
-import de.com.fdm.grpc.microsub.MicrosubService;
-import de.com.fdm.grpc.receiver.ReceiverService;
 import de.com.fdm.db.repositories.MicroSubRepository;
+import de.com.fdm.microsub.MicrosubService;
+import de.com.fdm.tmi.TmiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class Application {
 
     @Autowired
-    private ReceiverService receiverService;
+    private TmiService tmiService;
 
     @Autowired
     private MicrosubService microsubService;
@@ -30,7 +30,7 @@ public class Application {
 
     @EventListener(ApplicationReadyEvent.class)
     public void joinChannels() {
-        receiverService.joinInitialChannels();
+        tmiService.joinInitialChannels();
     }
 
     @EventListener(ApplicationReadyEvent.class)

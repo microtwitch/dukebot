@@ -29,17 +29,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
     implementation('org.postgresql:postgresql:42.3.1')
     implementation('javax.xml.bind:jaxb-api:2.4.0-b180830.0359')
-    implementation('de.com.fdm:TmiReceiverInterface') {
-        version {
-            branch = 'master'
-        }
-    }
     implementation('de.com.fdm:microsub-interface') {
         version {
             branch = 'master'
         }
     }
-    implementation("com.github.twitch4j:twitch4j:1.7.0")
+    implementation('com.github.twitch4j:twitch4j:1.9.0')
 
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.2')
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")

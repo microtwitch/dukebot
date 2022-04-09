@@ -1,12 +1,13 @@
-package de.com.fdm.grpc.receiver.client;
+package de.com.fdm.microsub.client;
 
-
-import de.com.fdm.grpc.receiver.lib.Empty;
+import de.com.fdm.grpc.microsub.lib.Empty;
 import io.grpc.stub.StreamObserver;
 
-public class ReceiverCallback implements StreamObserver<Empty> {
+public class MicrosubCallback implements StreamObserver<Empty> {
+
     @Override
     public void onNext(Empty value) {
+
     }
 
     @Override
@@ -16,5 +17,6 @@ public class ReceiverCallback implements StreamObserver<Empty> {
 
     @Override
     public void onCompleted() {
+
     }
 }

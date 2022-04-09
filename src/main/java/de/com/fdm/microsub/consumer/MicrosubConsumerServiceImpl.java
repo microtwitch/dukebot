@@ -1,14 +1,14 @@
-package de.com.fdm.grpc.microsub.consumer;
+package de.com.fdm.microsub.consumer;
 
 import de.com.fdm.config.ConfigProperties;
-import de.com.fdm.grpc.dispatcher.DispatcherClient;
-import de.com.fdm.grpc.dispatcher.lib.OutboundMessage;
 import de.com.fdm.grpc.microsub.lib.ConsumerGrpc;
 import de.com.fdm.grpc.microsub.lib.Empty;
 import de.com.fdm.grpc.microsub.lib.EventsubMessage;
 import de.com.fdm.db.data.MicroSub;
 import de.com.fdm.db.repositories.MicroSubRepository;
 import de.com.fdm.grpc.microsub.lib.Type;
+import de.com.fdm.tmi.OutboundMessage;
+import de.com.fdm.tmi.TmiService;
 import io.grpc.Context;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -27,7 +27,7 @@ public class MicrosubConsumerServiceImpl extends ConsumerGrpc.ConsumerImplBase {
     private final Map<String, Instant> userLastAlertTime;
 
     @Autowired
-    private DispatcherClient dispatcherClient;
+    private TmiService tmiService;
 
     @Autowired
     private ConfigProperties config;
@@ -62,14 +62,10 @@ public class MicrosubConsumerServiceImpl extends ConsumerGrpc.ConsumerImplBase {
 
         for (MicroSub microSub : microSubList) {
             if (microSub.getBroadcasterUserId().equals(eventsubMessage.getBroadcasterUserId())) {
-                OutboundMessage msg = OutboundMessage
-                        .newBuilder()
-                        .setText(String.format("[%s]: %s", eventsubMessage.getBroadcasterUserName(), eventsubMessage.getEventUserName()))
-                        .setChannel(microSub.getChannel())
-                        .setAuth(config.getBotAuth())
-                        .build();
+                String text = String.format("[%s]: %s", eventsubMessage.getBroadcasterUserName(), eventsubMessage.getEventUserName());
 
-                ctx.run(() -> this.dispatcherClient.send(msg));
+                OutboundMessage msg = new OutboundMessage(microSub.getChannel(), text);
+                ctx.run(() -> this.tmiService.send(msg));
             }
         }
 
@@ -84,13 +80,9 @@ public class MicrosubConsumerServiceImpl extends ConsumerGrpc.ConsumerImplBase {
         }
         String text = String.format("PagChomp OH SHIT %s THANKS FOR THE FOLLOW!", eventsubMessage.getEventUserName());
 
-        OutboundMessage msg = OutboundMessage.newBuilder()
-                .setText(text)
-                .setChannel("turtoise")
-                .setAuth(config.getTurtoiseAuth())
-                .build();
+        OutboundMessage msg = new OutboundMessage("turtoise", text);
 
-        dispatcherClient.send(msg);
+        tmiService.send(msg);
     }
 
     private void sendTurtoiseSubAlert(EventsubMessage eventsubMessage) {
@@ -100,13 +92,10 @@ public class MicrosubConsumerServiceImpl extends ConsumerGrpc.ConsumerImplBase {
         } else {
             text = String.format("heCrazy YOOO %s THANKS FOR SUBBING!", eventsubMessage.getEventUserName());
         }
-        OutboundMessage msg = OutboundMessage.newBuilder()
-                .setText(text)
-                .setChannel("turtoise")
-                .setAuth(config.getTurtoiseAuth())
-                .build();
 
-        dispatcherClient.send(msg);
+        OutboundMessage msg = new OutboundMessage("turtoise", text);
+
+        tmiService.send(msg);
     }
 
     private boolean canSendFollow(EventsubMessage msg) {

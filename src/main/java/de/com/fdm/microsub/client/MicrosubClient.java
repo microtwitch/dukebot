@@ -1,4 +1,4 @@
-package de.com.fdm.grpc.microsub.client;
+package de.com.fdm.microsub.client;
 
 import de.com.fdm.grpc.microsub.lib.Deletion;
 import de.com.fdm.grpc.microsub.lib.MicrosubGrpc;

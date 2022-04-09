@@ -3,9 +3,8 @@ package de.com.fdm.bot;
 import de.com.fdm.bot.access.RateLimiter;
 import de.com.fdm.bot.commands.Command;
 import de.com.fdm.config.ConfigProperties;
-import de.com.fdm.db.data.User;
-import de.com.fdm.db.services.UserService;
-import de.com.fdm.grpc.receiver.lib.TwitchMessage;
+import de.com.fdm.tmi.InboundMessage;
+import de.com.fdm.tmi.OutboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,35 +14,28 @@ public class MessageHandler {
     private ConfigProperties config;
 
     @Autowired
-    private CommandHandler commandHandler;
-
-    @Autowired
     private CommandParser commandParser;
 
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private RateLimiter rateLimiter;
 
-    public void handleMessage(TwitchMessage msg) {
+    // TODO: use result instead of return null
+    public OutboundMessage handleMessage(InboundMessage msg) {
         if (msg.getUserName().equals("gopherobot")) {
-            return;
+            return null;
         }
 
         if (!msg.getText().startsWith(config.getBotPrefix())) {
-            return;
+            return null;
+        }
+
+        if (!msg.getUserID().equals("116672490")) {
+            return null;
         }
 
         Command cmd = this.commandParser.parseMessage(msg);
 
-        User user = userService.getUserForUserId(msg.getUserId());
-        if (user == null) {
-            return;
-        }
-
-        if (user.canExecute(cmd) && rateLimiter.canSend(msg.getUserId())) {
-            this.commandHandler.handleCommand(cmd);
-        }
+        return new OutboundMessage(cmd.getChannel(), cmd.execute());
     }
 }
