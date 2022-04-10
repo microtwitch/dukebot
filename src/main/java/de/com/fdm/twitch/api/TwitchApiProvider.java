@@ -1,4 +1,4 @@
-package de.com.fdm.bot.twitch;
+package de.com.fdm.twitch.api;
 
 import com.github.twitch4j.TwitchClient;
 import com.github.twitch4j.TwitchClientBuilder;

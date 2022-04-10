@@ -1,6 +1,6 @@
 package de.com.fdm.bot.commands;
 
-import de.com.fdm.bot.twitch.TwitchApiProvider;
+import de.com.fdm.twitch.api.TwitchApiProvider;
 
 import java.util.List;
 import java.util.Objects;

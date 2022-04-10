@@ -7,10 +7,10 @@ import de.com.fdm.bot.commands.IdUserCommand;
 import de.com.fdm.bot.commands.PingCommand;
 import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.bot.commands.UserIdCommand;
-import de.com.fdm.bot.twitch.TwitchApiProvider;
+import de.com.fdm.twitch.api.TwitchApiProvider;
 import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.microsub.MicrosubService;
-import de.com.fdm.tmi.InboundMessage;
+import de.com.fdm.twitch.tmi.InboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

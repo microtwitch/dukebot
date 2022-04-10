@@ -3,8 +3,8 @@ package de.com.fdm.bot;
 import de.com.fdm.bot.access.RateLimiter;
 import de.com.fdm.bot.commands.Command;
 import de.com.fdm.config.ConfigProperties;
-import de.com.fdm.tmi.InboundMessage;
-import de.com.fdm.tmi.OutboundMessage;
+import de.com.fdm.twitch.tmi.InboundMessage;
+import de.com.fdm.twitch.tmi.OutboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

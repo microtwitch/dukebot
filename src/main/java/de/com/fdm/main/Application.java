@@ -3,7 +3,7 @@ package de.com.fdm.main;
 
 import de.com.fdm.db.repositories.MicroSubRepository;
 import de.com.fdm.microsub.MicrosubService;
-import de.com.fdm.tmi.TmiService;
+import de.com.fdm.twitch.tmi.TmiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

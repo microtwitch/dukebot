@@ -1,4 +1,4 @@
-package de.com.fdm.tmi;
+package de.com.fdm.twitch.tmi;
 
 public class OutboundMessage {
     private final String channel;

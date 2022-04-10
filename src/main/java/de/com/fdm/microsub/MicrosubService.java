@@ -1,6 +1,6 @@
 package de.com.fdm.microsub;
 
-import de.com.fdm.bot.twitch.TwitchApiProvider;
+import de.com.fdm.twitch.api.TwitchApiProvider;
 import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.grpc.microsub.lib.Deletion;
 import de.com.fdm.grpc.microsub.lib.Registration;

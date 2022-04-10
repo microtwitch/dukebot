@@ -1,4 +1,4 @@
-package de.com.fdm.tmi;
+package de.com.fdm.twitch.tmi;
 
 import com.github.twitch4j.chat.events.channel.ChannelMessageActionEvent;
 import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;

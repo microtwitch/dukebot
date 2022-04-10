@@ -1,4 +1,4 @@
-package de.com.fdm.tmi;
+package de.com.fdm.twitch.tmi;
 
 import com.github.philippheuer.credentialmanager.domain.OAuth2Credential;
 import com.github.twitch4j.TwitchClient;
