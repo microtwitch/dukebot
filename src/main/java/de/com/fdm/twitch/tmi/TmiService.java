@@ -7,6 +7,7 @@ import com.github.twitch4j.chat.events.channel.ChannelMessageActionEvent;
 import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
 import de.com.fdm.bot.MessageHandler;
 import de.com.fdm.config.ConfigProperties;
+import de.com.fdm.lib.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,15 +35,19 @@ public class TmiService {
     private void handleMeMessage(ChannelMessageActionEvent event) {
         InboundMessage msg = new InboundMessage(event);
 
-        OutboundMessage outMsg = messageHandler.handleMessage(msg);
-        send(outMsg);
+        Result<OutboundMessage, String> result = messageHandler.handleMessage(msg);
+        if (result.isOk()) {
+            send(result.getValue());
+        }
     }
 
     private void handleChannelMessage(ChannelMessageEvent event) {
         InboundMessage msg = new InboundMessage(event);
 
-        OutboundMessage outMsg = messageHandler.handleMessage(msg);
-        send(outMsg);
+        Result<OutboundMessage, String> result = messageHandler.handleMessage(msg);
+        if (result.isOk()) {
+            send(result.getValue());
+        }
     }
 
     public void send(OutboundMessage msg) {

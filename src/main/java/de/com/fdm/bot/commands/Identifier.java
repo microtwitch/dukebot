@@ -38,7 +38,6 @@ public enum Identifier {
     public static Result<Identifier, Exception> getIdentifier(String rawIdentifier) {
         try {
             Identifier identifier = Identifier.valueOf(rawIdentifier.toUpperCase());
-            System.out.println("test");
             return Result.ok(identifier);
         } catch (IllegalArgumentException e) {
             return Result.error(e);
