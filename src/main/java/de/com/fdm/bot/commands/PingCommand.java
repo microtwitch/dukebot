@@ -7,8 +7,8 @@ import java.lang.management.RuntimeMXBean;
 import java.time.Duration;
 
 public class PingCommand extends Command {
-    public PingCommand(String channel) {
-        super(channel);
+    public PingCommand(Parameters params) {
+        super(params);
     }
 
     public String execute() {

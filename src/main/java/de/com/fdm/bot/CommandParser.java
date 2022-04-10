@@ -1,12 +1,10 @@
 package de.com.fdm.bot;
 
 import de.com.fdm.bot.commands.Command;
-import de.com.fdm.bot.commands.EchoCommand;
-import de.com.fdm.bot.commands.HttpStatusCommand;
-import de.com.fdm.bot.commands.IdUserCommand;
-import de.com.fdm.bot.commands.PingCommand;
+import de.com.fdm.bot.commands.Identifier;
+import de.com.fdm.bot.commands.Parameters;
 import de.com.fdm.bot.commands.UnkownCommand;
-import de.com.fdm.bot.commands.UserIdCommand;
+import de.com.fdm.lib.Result;
 import de.com.fdm.twitch.api.TwitchApiProvider;
 import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.microsub.MicrosubService;
@@ -14,12 +12,12 @@ import de.com.fdm.twitch.tmi.InboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Id;
 import java.util.Arrays;
 import java.util.List;
 
 @Component
 public class CommandParser {
-
     @Autowired
     private ConfigProperties config;
 
@@ -27,34 +25,23 @@ public class CommandParser {
     private  TwitchApiProvider twitchApiProvider;
 
     @Autowired
+    private ApiProvider apiProvider;
+
+    @Autowired
     private MicrosubService microsubService;
 
     public Command parseMessage(InboundMessage msg) {
-        String text = msg.getText().substring(1);
-        String[] chunks = text.split(" ");
-        String identifier = chunks[0];
+        String messageText = msg.getText().substring(1);
+        String[] chunks = messageText.split(" ");
+
         List<String> args = Arrays.stream(chunks).toList().subList(1, chunks.length);
+        Parameters params = new Parameters(msg.getChannel(), messageText, args, apiProvider);
 
-        if (identifier.equals("ping")) {
-            return new PingCommand(msg.getChannel());
+        Result<Identifier, Exception> result = Identifier.getIdentifier(chunks[0]);
+        if (result.isError()) {
+            return new UnkownCommand(params);
         }
 
-        if (identifier.equals("httpstatus")) {
-            return new HttpStatusCommand(msg.getChannel(), args);
-        }
-
-        if (identifier.equals("id")) {
-            return new UserIdCommand(msg.getChannel(), args, twitchApiProvider);
-        }
-
-        if (identifier.equals("user")) {
-            return new IdUserCommand(msg.getChannel(), args, twitchApiProvider);
-        }
-
-        if (identifier.equals("echo")) {
-            return new EchoCommand(msg.getChannel(), msg.getText());
-        }
-
-        return new UnkownCommand(msg.getChannel());
+        return result.getValue().getCommand(params);
     }
 }

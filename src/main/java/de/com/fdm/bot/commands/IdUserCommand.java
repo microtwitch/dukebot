@@ -2,14 +2,14 @@ package de.com.fdm.bot.commands;
 
 import de.com.fdm.twitch.api.TwitchApiProvider;
 
-import java.util.List;
 
-public class IdUserCommand extends ArgsCommand {
+
+public class IdUserCommand extends Command {
     private final TwitchApiProvider twitchApiProvider;
 
-    public IdUserCommand(String channel, List<String> args, TwitchApiProvider twitchApiProvider) {
-        super(channel, args);
-        this.twitchApiProvider = twitchApiProvider;
+    public IdUserCommand(Parameters params) {
+        super(params);
+        this.twitchApiProvider = params.getApiProvider().getTwitchApiProvider();
     }
 
     @Override

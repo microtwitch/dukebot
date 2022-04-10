@@ -1,9 +1,9 @@
 package de.com.fdm.bot.commands;
 
 
-public class EchoCommand extends MessageCommand {
-    public EchoCommand(String channel, String message) {
-        super(channel, message);
+public class EchoCommand extends Command {
+    public EchoCommand(Parameters params) {
+        super(params);
     }
 
     @Override

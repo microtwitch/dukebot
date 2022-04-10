@@ -2,8 +2,8 @@ package de.com.fdm.bot.commands;
 
 
 public class UnkownCommand extends Command {
-    public UnkownCommand(String channel) {
-        super(channel);
+    public UnkownCommand(Parameters params) {
+        super(params);
     }
 
     @Override
