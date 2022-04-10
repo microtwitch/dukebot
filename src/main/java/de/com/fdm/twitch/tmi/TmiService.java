@@ -28,20 +28,24 @@ public class TmiService {
                 .withChatAccount(credentials)
                 .build();
 
-        client.getEventManager().onEvent(ChannelMessageEvent.class, this::handleChannelMessage);
-        client.getEventManager().onEvent(ChannelMessageActionEvent.class, this::handleMeMessage);
+        client.getEventManager().onEvent(ChannelMessageEvent.class, this::handleMessage);
+        client.getEventManager().onEvent(ChannelMessageActionEvent.class, this::handleActionMessage);
     }
 
-    private void handleMeMessage(ChannelMessageActionEvent event) {
-        InboundMessage msg = new InboundMessage(event);
+    private void handleActionMessage(ChannelMessageActionEvent event) {
+        ChannelMessageEvent msgEvent = new ChannelMessageEvent(
+                event.getChannel(),
+                event.getMessageEvent(),
+                event.getUser(),
+                event.getMessage(),
+                event.getPermissions()
+        );
 
-        Result<OutboundMessage, String> result = messageHandler.handleMessage(msg);
-        if (result.isOk()) {
-            send(result.getValue());
-        }
+        handleMessage(msgEvent);
     }
 
-    private void handleChannelMessage(ChannelMessageEvent event) {
+
+    private void handleMessage(ChannelMessageEvent event) {
         InboundMessage msg = new InboundMessage(event);
 
         Result<OutboundMessage, String> result = messageHandler.handleMessage(msg);

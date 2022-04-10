@@ -12,7 +12,6 @@ import de.com.fdm.twitch.tmi.InboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Id;
 import java.util.Arrays;
 import java.util.List;
 

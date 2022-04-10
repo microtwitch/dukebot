@@ -3,7 +3,6 @@ package de.com.fdm.bot.commands;
 import de.com.fdm.twitch.api.TwitchApiProvider;
 
 
-
 public class IdUserCommand extends Command {
     private final TwitchApiProvider twitchApiProvider;
 
