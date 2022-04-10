@@ -1,6 +1,5 @@
 package de.com.fdm.bot;
 
-import de.com.fdm.bot.access.RateLimiter;
 import de.com.fdm.bot.commands.Command;
 import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.twitch.tmi.InboundMessage;
@@ -15,10 +14,6 @@ public class MessageHandler {
 
     @Autowired
     private CommandParser commandParser;
-
-
-    @Autowired
-    private RateLimiter rateLimiter;
 
     // TODO: use result instead of return null
     public OutboundMessage handleMessage(InboundMessage msg) {
