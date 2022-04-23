@@ -8,7 +8,6 @@ import de.com.fdm.bot.commands.Parameters;
 import de.com.fdm.bot.commands.PingCommand;
 import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.bot.commands.UserIdCommand;
-import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.twitch.tmi.InboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,9 +18,6 @@ import java.util.List;
 
 @Component
 public class CommandRunner {
-    @Autowired
-    private ConfigProperties config;
-
     private final UnkownCommand unkownCommand;
     private final HashMap<String, Command> commandMap;
 

@@ -5,32 +5,31 @@ import com.github.twitch4j.TwitchClientBuilder;
 import com.github.twitch4j.helix.domain.User;
 import com.github.twitch4j.helix.domain.UserList;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
-import de.com.fdm.config.ConfigProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class TwitchApiProvider {
+    private final String botAuth;
     private final TwitchClient client;
 
-    public TwitchApiProvider() {
+    public TwitchApiProvider(@Value("${bot.auth}") String botAuth) {
+        this.botAuth = botAuth;
         this.client = TwitchClientBuilder
                 .builder()
                 .withEnableHelix(true)
                 .build();
     }
 
-    @Autowired
-    private ConfigProperties config;
-
     public String getUserId(String userName) {
         UserList userList;
         try {
             userList = client
                     .getHelix()
-                    .getUsers(this.config.getBotAuth(), null, List.of(userName))
+                    .getUsers(botAuth, null, List.of(userName))
                     .execute();
         } catch (HystrixRuntimeException e) {
             return null;
@@ -49,7 +48,7 @@ public class TwitchApiProvider {
         try {
             userList = client
                     .getHelix()
-                    .getUsers(this.config.getBotAuth(), List.of(userId), null)
+                    .getUsers(botAuth, List.of(userId), null)
                     .execute();
         } catch (HystrixRuntimeException e) {
             return "User not found";

@@ -6,23 +6,23 @@ import com.github.twitch4j.TwitchClientBuilder;
 import com.github.twitch4j.chat.events.channel.ChannelMessageActionEvent;
 import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
 import de.com.fdm.bot.MessageHandler;
-import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.lib.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TmiService {
     private final TwitchClient client;
-    private final ConfigProperties config;
+    private final MessageHandler messageHandler;
 
-    @Autowired
-    private MessageHandler messageHandler;
+    public TmiService(
+            @Value("${bot.auth}") String botAuth,
+            @Autowired MessageHandler messageHandler
+    ) {
+        this.messageHandler = messageHandler;
 
-    public TmiService(@Autowired ConfigProperties config) {
-        this.config = config;
-
-        OAuth2Credential credentials = new OAuth2Credential("twitch", config.getBotAuth());
+        OAuth2Credential credentials = new OAuth2Credential("twitch", botAuth);
         this.client = TwitchClientBuilder.builder()
                 .withEnableChat(true)
                 .withChatAccount(credentials)
@@ -58,8 +58,8 @@ public class TmiService {
         client.getChat().sendMessage(msg.getChannel(), msg.getText());
     }
 
-    public void joinInitialChannels() {
-        for (String channel : config.getBotChannels()) {
+    public void joinChannels(String[] channels) {
+        for (String channel : channels) {
             client.getChat().joinChannel(channel);
         }
     }
