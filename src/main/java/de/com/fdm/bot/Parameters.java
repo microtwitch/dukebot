@@ -1,4 +1,4 @@
-package de.com.fdm.bot.commands;
+package de.com.fdm.bot;
 
 
 import java.util.List;

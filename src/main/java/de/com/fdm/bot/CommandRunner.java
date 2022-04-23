@@ -1,14 +1,15 @@
 package de.com.fdm.bot;
 
-import de.com.fdm.bot.commands.Command;
+import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
 import de.com.fdm.bot.commands.EchoCommand;
 import de.com.fdm.bot.commands.HttpStatusCommand;
 import de.com.fdm.bot.commands.IdUserCommand;
-import de.com.fdm.bot.commands.Parameters;
+import de.com.fdm.bot.commands.JoinChannelCommand;
+import de.com.fdm.bot.commands.ListChannelsCommand;
+import de.com.fdm.bot.commands.PartChannelCommand;
 import de.com.fdm.bot.commands.PingCommand;
 import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.bot.commands.UserIdCommand;
-import de.com.fdm.twitch.tmi.InboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +28,9 @@ public class CommandRunner {
             @Autowired UserIdCommand userIdCommand,
             @Autowired IdUserCommand idUserCommand,
             @Autowired HttpStatusCommand httpStatusCommand,
+            @Autowired ListChannelsCommand listChannelsCommand,
+            @Autowired JoinChannelCommand joinChannelCommand,
+            @Autowired PartChannelCommand partChannelCommand,
             @Autowired UnkownCommand unkownCommand
     ) {
         commandMap = new HashMap<>();
@@ -35,16 +39,19 @@ public class CommandRunner {
         commandMap.put("httpstatus", httpStatusCommand);
         commandMap.put("id", userIdCommand);
         commandMap.put("user", idUserCommand);
+        commandMap.put("channels", listChannelsCommand);
+        commandMap.put("joinchannel", joinChannelCommand);
+        commandMap.put("partchannel", partChannelCommand);
 
         this.unkownCommand = unkownCommand;
     }
 
-    public String runCommand(InboundMessage msg) {
-        String messageText = msg.getText().substring(1);
+    public String runCommand(ChannelMessageEvent msg) {
+        String messageText = msg.getMessage().substring(1);
         String[] chunks = messageText.split(" ");
 
         List<String> args = Arrays.stream(chunks).toList().subList(1, chunks.length);
-        Parameters params = new Parameters(msg.getChannel(), messageText, args);
+        Parameters params = new Parameters(msg.getChannel().getName(), messageText, args);
 
         Command command = commandMap.getOrDefault(chunks[0], unkownCommand);
 

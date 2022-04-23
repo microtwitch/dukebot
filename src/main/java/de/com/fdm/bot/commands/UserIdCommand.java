@@ -1,5 +1,7 @@
 package de.com.fdm.bot.commands;
 
+import de.com.fdm.bot.Command;
+import de.com.fdm.bot.Parameters;
 import de.com.fdm.twitch.api.TwitchApiProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

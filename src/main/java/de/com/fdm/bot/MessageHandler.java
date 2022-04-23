@@ -1,44 +1,43 @@
 package de.com.fdm.bot;
 
-import de.com.fdm.lib.Result;
-import de.com.fdm.twitch.tmi.InboundMessage;
-import de.com.fdm.twitch.tmi.OutboundMessage;
+import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
+import de.com.fdm.twitch.tmi.TmiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MessageHandler {
-    private static final String OWNER_ID = "116672490";
     private final String botPrefix;
     private final String botName;
+    private final TmiService tmiService;
 
     public MessageHandler(
             @Value("${bot.prefix}") String botPrefix,
-            @Value("${bot.name}")  String botName
+            @Value("${bot.name}")  String botName,
+            @Autowired TmiService tmiService
     ) {
         this.botPrefix = botPrefix;
         this.botName = botName;
+        this.tmiService = tmiService;
+
+        tmiService.setCallback(this::handleMessage);
     }
 
     @Autowired
     private CommandRunner commandRunner;
 
-    public Result<OutboundMessage, String> handleMessage(InboundMessage msg) {
-        if (msg.getUserName().equals(botName)) {
-            return Result.error("Ignored message by bot itself.");
+    public void handleMessage(ChannelMessageEvent msg) {
+        if (msg.getUser().getName().equals(botName)) {
+            tmiService.send(msg.getChannel().getName(), "Ignored message by bot itself.");
         }
 
-        if (!msg.getText().startsWith(botPrefix)) {
-            return Result.error("Wrong prefix.");
-        }
-
-        if (!msg.getUserID().equals(OWNER_ID)) {
-            return Result.error("User access not allowed.");
+        if (!msg.getMessage().startsWith(botPrefix)) {
+            tmiService.send(msg.getChannel().getName(), "Wrong prefix.");
         }
 
         String result = this.commandRunner.runCommand(msg);
 
-        return Result.ok(new OutboundMessage(msg.getChannel(), result));
+        tmiService.send(msg.getChannel().getName(), result);
     }
 }
