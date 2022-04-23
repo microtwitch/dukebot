@@ -1,14 +1,11 @@
 package de.com.fdm.bot.commands;
 
+import org.springframework.stereotype.Component;
 
-public class EchoCommand extends MessageCommand {
-    public EchoCommand(String channel, String message) {
-        super(channel, message);
-    }
-
-    @Override
-    public String execute() {
-        String content = getMessage().substring(5);
+@Component
+public class EchoCommand implements Command {
+    public String execute(Parameters params) {
+        String content = params.getMsg().substring(5);
 
         if (content.isBlank()) {
             return "No message provided";

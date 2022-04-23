@@ -1,49 +1,37 @@
 package de.com.fdm.bot;
 
-import de.com.fdm.bot.access.RateLimiter;
-import de.com.fdm.bot.commands.Command;
 import de.com.fdm.config.ConfigProperties;
-import de.com.fdm.db.data.User;
-import de.com.fdm.db.services.UserService;
-import de.com.fdm.grpc.receiver.lib.TwitchMessage;
+import de.com.fdm.lib.Result;
+import de.com.fdm.twitch.tmi.InboundMessage;
+import de.com.fdm.twitch.tmi.OutboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MessageHandler {
+    private static final String OWNER_ID = "116672490";
+
     @Autowired
     private ConfigProperties config;
 
     @Autowired
-    private CommandHandler commandHandler;
+    private CommandRunner commandRunner;
 
-    @Autowired
-    private CommandParser commandParser;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private RateLimiter rateLimiter;
-
-    public void handleMessage(TwitchMessage msg) {
-        if (msg.getUserName().equals("gopherobot")) {
-            return;
+    public Result<OutboundMessage, String> handleMessage(InboundMessage msg) {
+        if (msg.getUserName().equals(config.getBotName())) {
+            return Result.error("Ignored message by bot itself.");
         }
 
         if (!msg.getText().startsWith(config.getBotPrefix())) {
-            return;
+            return Result.error("Wrong prefix.");
         }
 
-        Command cmd = this.commandParser.parseMessage(msg);
-
-        User user = userService.getUserForUserId(msg.getUserId());
-        if (user == null) {
-            return;
+        if (!msg.getUserID().equals(OWNER_ID)) {
+            return Result.error("User access not allowed.");
         }
 
-        if (user.canExecute(cmd) && rateLimiter.canSend(msg.getUserId())) {
-            this.commandHandler.handleCommand(cmd);
-        }
+        String result = this.commandRunner.runCommand(msg);
+
+        return Result.ok(new OutboundMessage(msg.getChannel(), result));
     }
 }

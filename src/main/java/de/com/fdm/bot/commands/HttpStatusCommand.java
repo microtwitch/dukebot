@@ -1,38 +1,29 @@
 package de.com.fdm.bot.commands;
 
-import de.com.fdm.bot.access.UserLevel;
-import io.grpc.netty.shaded.io.netty.handler.codec.http.HttpResponseStatus;
 
-import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
-public class HttpStatusCommand extends ArgsCommand {
-    private final UserLevel level = UserLevel.PLEB;
-    public HttpStatusCommand(String channel, List<String> args) {
-        super(channel, args);
-    }
-
+@Component
+public class HttpStatusCommand implements Command {
     @Override
-    public String execute() {
-        if (this.getArgs().size() == 0) {
+    public String execute(Parameters params) {
+        if (params.getArgs().size() == 0) {
             return "No status code provided";
         }
 
         int statusCode;
         try {
-            statusCode = Integer.parseInt(this.getArgs().get(0));
+            statusCode = Integer.parseInt(params.getArgs().get(0));
         } catch (NumberFormatException e) {
             return "Not a valid status code";
         }
 
-        String statusCodeText = HttpResponseStatus.valueOf(statusCode).toString();
+        String statusCodeText = HttpStatus.valueOf(statusCode).toString();
         if (statusCodeText.contains("Unknown Status")) {
             return "Not a valid status code";
         }
 
         return String.format("%s https://http.cat/%s", statusCodeText, statusCode);
-    }
-
-    public UserLevel getLevel() {
-        return this.level;
     }
 }

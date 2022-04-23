@@ -3,13 +3,12 @@ buildscript {
         springBootVersion = '2.6.2'
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6")
     }
 }
 
 plugins {
     id 'java'
-    id 'org.springframework.boot' version "${springBootVersion}"
 }
 
 group 'org.example'
@@ -24,22 +23,11 @@ jar {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter:${springBootVersion}")
-    implementation('net.devh:grpc-server-spring-boot-starter:2.13.0.RELEASE')
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
-    implementation('org.postgresql:postgresql:42.3.1')
+    implementation('org.springframework.boot:spring-boot-starter:2.6.6')
+    implementation 'org.springframework:spring-web:5.3.19'
+    implementation 'com.google.code.gson:gson:2.7'
     implementation('javax.xml.bind:jaxb-api:2.4.0-b180830.0359')
-    implementation('de.com.fdm:TmiReceiverInterface') {
-        version {
-            branch = 'master'
-        }
-    }
-    implementation('de.com.fdm:microsub-interface') {
-        version {
-            branch = 'master'
-        }
-    }
-    implementation("com.github.twitch4j:twitch4j:1.7.0")
+    implementation('com.github.twitch4j:twitch4j:1.9.0')
 
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.2')
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
