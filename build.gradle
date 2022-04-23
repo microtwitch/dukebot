@@ -3,13 +3,12 @@ buildscript {
         springBootVersion = '2.6.2'
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6")
     }
 }
 
 plugins {
     id 'java'
-    id 'org.springframework.boot' version "${springBootVersion}"
 }
 
 group 'org.example'
@@ -24,7 +23,7 @@ jar {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter:${springBootVersion}")
+    implementation('org.springframework.boot:spring-boot-starter:2.6.6')
     implementation 'org.springframework:spring-web:5.3.19'
     implementation 'com.google.code.gson:gson:2.7'
     implementation('javax.xml.bind:jaxb-api:2.4.0-b180830.0359')
