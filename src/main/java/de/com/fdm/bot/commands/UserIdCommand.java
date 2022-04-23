@@ -8,8 +8,11 @@ import java.util.Objects;
 
 @Component
 public class UserIdCommand implements Command {
-    @Autowired
-    private TwitchApiProvider twitchApiProvider;
+    private final TwitchApiProvider twitchApiProvider;
+
+    public UserIdCommand(@Autowired TwitchApiProvider twitchApiProvider) {
+        this.twitchApiProvider = twitchApiProvider;
+    }
 
     @Override
     public String execute(Parameters params) {

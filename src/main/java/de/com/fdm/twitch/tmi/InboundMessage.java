@@ -9,13 +9,6 @@ public class InboundMessage {
     private final String channel;
     private final String text;
 
-    public InboundMessage(ChannelMessageActionEvent event) {
-        this.userID = event.getUser().getId() ;
-        this.userName = event.getUser().getName();
-        this.channel = event.getChannel().getName();
-        this.text = event.getMessage();
-    }
-
     public InboundMessage(ChannelMessageEvent event) {
         this.userID = event.getUser().getId() ;
         this.userName = event.getUser().getName();

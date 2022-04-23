@@ -6,8 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class IdUserCommand implements Command {
-    @Autowired
-    private TwitchApiProvider twitchApiProvider;
+    private final TwitchApiProvider twitchApiProvider;
+
+    public IdUserCommand(@Autowired TwitchApiProvider twitchApiProvider) {
+        this.twitchApiProvider = twitchApiProvider;
+    }
 
     @Override
     public String execute(Parameters params) {

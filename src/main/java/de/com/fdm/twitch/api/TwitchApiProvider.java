@@ -54,14 +54,11 @@ public class TwitchApiProvider {
             return "User not found";
         }
 
-
-
         List<User> users = userList.getUsers();
         if (users.size() == 0) {
             return "User not found";
         }
 
         return users.get(0).getDisplayName();
-
     }
 }
