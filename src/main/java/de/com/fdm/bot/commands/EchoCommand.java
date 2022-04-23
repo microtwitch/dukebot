@@ -5,12 +5,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class EchoCommand implements Command {
     public String execute(Parameters params) {
-        String content = params.getMsg().substring(5);
-
-        if (content.isBlank()) {
-            return "No message provided";
+        if (params.getMsg().length() < 5) {
+            return "";
         }
 
-        return content;
+        return params.getMsg().substring(5);
     }
 }
