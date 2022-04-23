@@ -2,21 +2,19 @@ package de.com.fdm.bot.commands;
 
 
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 
-public class HttpStatusCommand extends Command {
-    public HttpStatusCommand(Parameters params) {
-        super(params);
-    }
-
+@Component
+public class HttpStatusCommand implements Command {
     @Override
-    public String execute() {
-        if (this.getArgs().size() == 0) {
+    public String execute(Parameters params) {
+        if (params.getArgs().size() == 0) {
             return "No status code provided";
         }
 
         int statusCode;
         try {
-            statusCode = Integer.parseInt(this.getArgs().get(0));
+            statusCode = Integer.parseInt(params.getArgs().get(0));
         } catch (NumberFormatException e) {
             return "Not a valid status code";
         }

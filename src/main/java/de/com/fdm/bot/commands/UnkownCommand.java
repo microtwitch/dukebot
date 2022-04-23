@@ -1,13 +1,12 @@
 package de.com.fdm.bot.commands;
 
 
-public class UnkownCommand extends Command {
-    public UnkownCommand(Parameters params) {
-        super(params);
-    }
+import org.springframework.stereotype.Component;
 
+@Component
+public class UnkownCommand implements Command {
     @Override
-    public String execute() {
+    public String execute(Parameters params) {
         return "Unknown command";
     }
 }

@@ -1,23 +1,21 @@
 package de.com.fdm.bot.commands;
 
 import de.com.fdm.twitch.api.TwitchApiProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
-public class IdUserCommand extends Command {
-    private final TwitchApiProvider twitchApiProvider;
-
-    public IdUserCommand(Parameters params) {
-        super(params);
-        this.twitchApiProvider = params.getApiProvider().getTwitchApiProvider();
-    }
+@Component
+public class IdUserCommand implements Command {
+    @Autowired
+    private TwitchApiProvider twitchApiProvider;
 
     @Override
-    public String execute() {
-        if (this.getArgs().size() == 0) {
+    public String execute(Parameters params) {
+        if (params.getArgs().size() == 0) {
             return "No id provided";
         }
 
-        String userId = this.getArgs().get(0);
+        String userId = params.getArgs().get(0);
         String userName = this.twitchApiProvider.getUserName(userId);
 
         return String.format("%s -> %s", userId, userName);

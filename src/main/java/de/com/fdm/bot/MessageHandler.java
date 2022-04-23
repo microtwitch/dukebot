@@ -1,6 +1,5 @@
 package de.com.fdm.bot;
 
-import de.com.fdm.bot.commands.Command;
 import de.com.fdm.config.ConfigProperties;
 import de.com.fdm.lib.Result;
 import de.com.fdm.twitch.tmi.InboundMessage;
@@ -16,7 +15,7 @@ public class MessageHandler {
     private ConfigProperties config;
 
     @Autowired
-    private CommandParser commandParser;
+    private CommandRunner commandRunner;
 
     public Result<OutboundMessage, String> handleMessage(InboundMessage msg) {
         if (msg.getUserName().equals(config.getBotName())) {
@@ -31,8 +30,8 @@ public class MessageHandler {
             return Result.error("User access not allowed.");
         }
 
-        Command cmd = this.commandParser.parseMessage(msg);
+        String result = this.commandRunner.runCommand(msg);
 
-        return Result.ok(new OutboundMessage(cmd.getChannel(), cmd.execute()));
+        return Result.ok(new OutboundMessage(msg.getChannel(), result));
     }
 }

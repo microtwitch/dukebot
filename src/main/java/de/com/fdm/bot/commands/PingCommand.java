@@ -1,17 +1,15 @@
 package de.com.fdm.bot.commands;
 
 
+import org.springframework.stereotype.Component;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.time.Duration;
 
-public class PingCommand extends Command {
-    public PingCommand(Parameters params) {
-        super(params);
-    }
-
-    public String execute() {
+@Component
+public class PingCommand implements Command {
+    public String execute(Parameters params) {
         return String.format("Uptime: %s", this.formatUptime(this.getUptime()));
     }
 
