@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class MessageHandler {
+    private static final String OWNER_ID = "116672490";
     private final String botPrefix;
     private final String botName;
     private final TmiService tmiService;
@@ -28,16 +29,19 @@ public class MessageHandler {
     private CommandRunner commandRunner;
 
     public void handleMessage(ChannelMessageEvent msg) {
+        if (!msg.getUser().getId().equals(OWNER_ID)) {
+            return;
+        }
+
         if (msg.getUser().getName().equals(botName)) {
-            tmiService.send(msg.getChannel().getName(), "Ignored message by bot itself.");
+            return;
         }
 
         if (!msg.getMessage().startsWith(botPrefix)) {
-            tmiService.send(msg.getChannel().getName(), "Wrong prefix.");
+            return;
         }
 
         String result = this.commandRunner.runCommand(msg);
-
         tmiService.send(msg.getChannel().getName(), result);
     }
 }
