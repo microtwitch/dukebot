@@ -7,7 +7,6 @@ import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.lib.Result;
 import de.com.fdm.twitch.api.TwitchApiProvider;
 import de.com.fdm.config.ConfigProperties;
-import de.com.fdm.microsub.MicrosubService;
 import de.com.fdm.twitch.tmi.InboundMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,9 +24,6 @@ public class CommandParser {
 
     @Autowired
     private ApiProvider apiProvider;
-
-    @Autowired
-    private MicrosubService microsubService;
 
     public Command parseMessage(InboundMessage msg) {
         String messageText = msg.getText().substring(1);

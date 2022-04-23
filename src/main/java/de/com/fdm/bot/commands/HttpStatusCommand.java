@@ -1,7 +1,7 @@
 package de.com.fdm.bot.commands;
 
-import io.grpc.netty.shaded.io.netty.handler.codec.http.HttpResponseStatus;
 
+import org.springframework.http.HttpStatus;
 
 public class HttpStatusCommand extends Command {
     public HttpStatusCommand(Parameters params) {
@@ -21,7 +21,7 @@ public class HttpStatusCommand extends Command {
             return "Not a valid status code";
         }
 
-        String statusCodeText = HttpResponseStatus.valueOf(statusCode).toString();
+        String statusCodeText = HttpStatus.valueOf(statusCode).toString();
         if (statusCodeText.contains("Unknown Status")) {
             return "Not a valid status code";
         }
