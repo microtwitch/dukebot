@@ -12,7 +12,6 @@ import java.nio.file.Path;
 public class CommitCommand implements Command {
     @Override
     public String execute(Parameters params) {
-        System.out.println(System.getenv());
-        return "test";
+        return System.getenv("COMMIT_SHA");
     }
 }
