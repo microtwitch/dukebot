@@ -1,6 +1,7 @@
 package de.com.fdm.bot;
 
 import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
+import de.com.fdm.bot.commands.CommitCommand;
 import de.com.fdm.bot.commands.EchoCommand;
 import de.com.fdm.bot.commands.HttpStatusCommand;
 import de.com.fdm.bot.commands.IdUserCommand;
@@ -31,6 +32,7 @@ public class CommandRunner {
             @Autowired ListChannelsCommand listChannelsCommand,
             @Autowired JoinChannelCommand joinChannelCommand,
             @Autowired PartChannelCommand partChannelCommand,
+            @Autowired CommitCommand commitCommand,
             @Autowired UnkownCommand unkownCommand
     ) {
         commandMap = new HashMap<>();
@@ -42,6 +44,7 @@ public class CommandRunner {
         commandMap.put("channels", listChannelsCommand);
         commandMap.put("joinchannel", joinChannelCommand);
         commandMap.put("partchannel", partChannelCommand);
+        commandMap.put("commit", commitCommand);
 
         this.unkownCommand = unkownCommand;
     }
