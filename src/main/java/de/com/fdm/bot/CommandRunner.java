@@ -54,7 +54,7 @@ public class CommandRunner {
         String[] chunks = messageText.split(" ");
 
         List<String> args = Arrays.stream(chunks).toList().subList(1, chunks.length);
-        Parameters params = new Parameters(msg.getChannel().getName(), messageText, args);
+        Parameters params = new Parameters(messageText, args);
 
         Command command = commandMap.getOrDefault(chunks[0], unkownCommand);
 

@@ -22,8 +22,8 @@ public class TmiService {
                 .withEnableChat(true)
                 .withChatAccount(credentials)
                 .build();
-
     }
+
     public void setCallback(Consumer<ChannelMessageEvent> callback) {
         client.getEventManager().onEvent(ChannelMessageEvent.class, callback);
     }
