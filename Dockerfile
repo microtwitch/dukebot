@@ -8,7 +8,6 @@ COPY src src
 RUN gradle build
 
 FROM bellsoft/liberica-openjdk-alpine:latest
-ARG GIT_COMMIT
-ENV GIT_COMMIT=$GIT_COMMIT
+RUN export GIT_COMMIT=$(git rev-parse --short HEAD)
 COPY --from=builder /home/gradle/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]

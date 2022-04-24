@@ -28,5 +28,3 @@ jobs:
         with:
           push: true
           tags: m4tthewde/dukebot:latest
-          build-args: |
-            GIT_COMMIT = ${{ github.sha }}
