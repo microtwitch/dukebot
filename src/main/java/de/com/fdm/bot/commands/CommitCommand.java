@@ -12,19 +12,7 @@ import java.nio.file.Path;
 public class CommitCommand implements Command {
     @Override
     public String execute(Parameters params) {
-        return getCommit();
-    }
-
-    private String getCommit() {
-        Path filePath = Path.of("commit.txt");
-        String commit;
-        try {
-            byte[] bytes = Files.readAllBytes(filePath);
-            commit = new String (bytes);
-        } catch (IOException e) {
-            return "Error reading commit";
-        }
-
-        return commit;
+        System.out.println(System.getenv());
+        return "test";
     }
 }
