@@ -9,6 +9,6 @@ RUN gradle build
 
 FROM bellsoft/liberica-openjdk-alpine:latest
 ARG GIT_COMMIT
-ENV COMMIT_SHA=${GIT_COMMIT}
+ENV COMMIT_SHA=$GIT_COMMIT
 COPY --from=builder /home/gradle/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
