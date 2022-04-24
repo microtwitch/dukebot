@@ -10,8 +10,12 @@ import java.nio.file.Path;
 
 @Component
 public class CommitCommand implements Command {
+    private final static String GITHUB_URL
+            = "https://github.com/microtwitch/dukebot/commit/";
+
     @Override
     public String execute(Parameters params) {
-        return System.getenv("COMMIT_SHA");
+        String commitHash = System.getenv("COMMIT_SHA").substring(0, 7);
+        return GITHUB_URL + commitHash;
     }
 }
