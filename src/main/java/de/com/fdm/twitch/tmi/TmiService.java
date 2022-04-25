@@ -3,6 +3,7 @@ package de.com.fdm.twitch.tmi;
 import com.github.philippheuer.credentialmanager.domain.OAuth2Credential;
 import com.github.twitch4j.TwitchClient;
 import com.github.twitch4j.TwitchClientBuilder;
+import com.github.twitch4j.chat.events.channel.ChannelMessageActionEvent;
 import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.function.Consumer;
 @Service
 public class TmiService {
     private final TwitchClient client;
+    private Consumer<ChannelMessageEvent> callback;
 
     public TmiService(
             @Value("${bot.auth}") String botAuth
@@ -26,6 +28,23 @@ public class TmiService {
 
     public void setCallback(Consumer<ChannelMessageEvent> callback) {
         client.getEventManager().onEvent(ChannelMessageEvent.class, callback);
+        this.callback = callback;
+
+        client.getEventManager().onEvent(
+                ChannelMessageActionEvent.class, this::actionMessageCallback
+        );
+    }
+
+    private void actionMessageCallback(ChannelMessageActionEvent event) {
+        ChannelMessageEvent msg = new ChannelMessageEvent(
+                event.getChannel(),
+                event.getMessageEvent(),
+                event.getUser(),
+                event.getMessage(),
+                event.getPermissions()
+        );
+
+        this.callback.accept(msg);
     }
 
     public void send(String channel, String msg) {
