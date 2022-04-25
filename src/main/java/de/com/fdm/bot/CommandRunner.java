@@ -11,6 +11,7 @@ import de.com.fdm.bot.commands.PartChannelCommand;
 import de.com.fdm.bot.commands.PingCommand;
 import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.bot.commands.UserIdCommand;
+import de.com.fdm.twitch.tmi.TmiMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -49,7 +50,7 @@ public class CommandRunner {
         this.unkownCommand = unkownCommand;
     }
 
-    public String runCommand(ChannelMessageEvent msg) {
+    public String runCommand(TmiMessage msg) {
         String messageText = msg.getMessage().substring(1);
         String[] chunks = messageText.split(" ");
 

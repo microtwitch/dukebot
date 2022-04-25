@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 @Service
 public class TmiService {
     private final TwitchClient client;
-    private Consumer<ChannelMessageEvent> callback;
+    private Consumer<TmiMessage> callback;
 
     public TmiService(
             @Value("${bot.auth}") String botAuth
@@ -26,25 +26,24 @@ public class TmiService {
                 .build();
     }
 
-    public void setCallback(Consumer<ChannelMessageEvent> callback) {
-        client.getEventManager().onEvent(ChannelMessageEvent.class, callback);
+    public void setCallback(Consumer<TmiMessage> callback) {
         this.callback = callback;
 
         client.getEventManager().onEvent(
                 ChannelMessageActionEvent.class, this::actionMessageCallback
         );
+
+        client.getEventManager().onEvent(
+                ChannelMessageEvent.class, this::messageCallback
+        );
+    }
+
+    private void messageCallback(ChannelMessageEvent event) {
+        this.callback.accept(new TmiMessage(event));
     }
 
     private void actionMessageCallback(ChannelMessageActionEvent event) {
-        ChannelMessageEvent msg = new ChannelMessageEvent(
-                event.getChannel(),
-                event.getMessageEvent(),
-                event.getUser(),
-                event.getMessage(),
-                event.getPermissions()
-        );
-
-        this.callback.accept(msg);
+        this.callback.accept(new TmiMessage(event));
     }
 
     public void send(String channel, String msg) {
