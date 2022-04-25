@@ -12,21 +12,21 @@ public class MessageHandler {
     private final String botPrefix;
     private final String botName;
     private final TmiService tmiService;
+    private final CommandRunner commandRunner;
 
     public MessageHandler(
             @Value("${bot.prefix}") String botPrefix,
             @Value("${bot.name}")  String botName,
-            @Autowired TmiService tmiService
+            @Autowired TmiService tmiService,
+            @Autowired CommandRunner commandRunner
     ) {
         this.botPrefix = botPrefix;
         this.botName = botName;
         this.tmiService = tmiService;
+        this.commandRunner = commandRunner;
 
         tmiService.setCallback(this::handleMessage);
     }
-
-    @Autowired
-    private CommandRunner commandRunner;
 
     public void handleMessage(ChannelMessageEvent msg) {
         if (!msg.getUser().getId().equals(OWNER_ID)) {
