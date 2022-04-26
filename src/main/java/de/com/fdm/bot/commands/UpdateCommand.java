@@ -1,7 +1,7 @@
 package de.com.fdm.bot.commands;
 
 import de.com.fdm.bot.Command;
-import de.com.fdm.bot.api.WatchtowerService;
+import de.com.fdm.bot.api.watchtower.WatchtowerService;
 import de.com.fdm.twitch.tmi.TmiMessage;
 import de.com.fdm.twitch.tmi.TmiService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,6 +5,8 @@ import com.github.twitch4j.TwitchClient;
 import com.github.twitch4j.TwitchClientBuilder;
 import com.github.twitch4j.chat.events.channel.ChannelMessageActionEvent;
 import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
+import de.com.fdm.bot.api.haste.HasteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +16,21 @@ import java.util.function.Consumer;
 @Service
 public class TmiService {
     private final TwitchClient client;
+    private final HasteService hasteService;
     private Consumer<TmiMessage> callback;
 
     public TmiService(
-            @Value("${bot.auth}") String botAuth
+            @Value("${bot.auth}") String botAuth,
+            @Autowired HasteService hasteService
     ) {
+        this.hasteService = hasteService;
+
         OAuth2Credential credentials = new OAuth2Credential("twitch", botAuth);
         this.client = TwitchClientBuilder.builder()
                 .withEnableChat(true)
                 .withChatAccount(credentials)
                 .build();
+
     }
 
     public void setCallback(Consumer<TmiMessage> callback) {
@@ -47,6 +54,12 @@ public class TmiService {
     }
 
     public void send(String channel, String msg) {
+        if (msg.length() >= 500) {
+            String url = hasteService.upload(msg);
+            client.getChat().sendMessage(channel, url);
+            return;
+        }
+
         client.getChat().sendMessage(channel, msg);
     }
 

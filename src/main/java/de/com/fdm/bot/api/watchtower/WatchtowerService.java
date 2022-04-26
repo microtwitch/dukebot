@@ -1,4 +1,4 @@
-package de.com.fdm.bot.api;
+package de.com.fdm.bot.api.watchtower;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
