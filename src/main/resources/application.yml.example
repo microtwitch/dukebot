@@ -9,3 +9,6 @@ bot:
 watchtower:
   url: "https://example.com/v1/update"
   token: "supamegasecret"
+
+haste:
+  url: "https://example.com/"
