@@ -4,14 +4,15 @@ import de.com.fdm.bot.commands.CommitCommand;
 import de.com.fdm.bot.commands.EchoCommand;
 import de.com.fdm.bot.commands.HttpStatusCommand;
 import de.com.fdm.bot.commands.IdUserCommand;
-import de.com.fdm.bot.commands.JoinChannelCommand;
-import de.com.fdm.bot.commands.ListChannelsCommand;
-import de.com.fdm.bot.commands.PartChannelCommand;
+import de.com.fdm.bot.commands.channel.JoinChannelCommand;
+import de.com.fdm.bot.commands.channel.ListChannelsCommand;
+import de.com.fdm.bot.commands.channel.PartChannelCommand;
 import de.com.fdm.bot.commands.PingCommand;
 import de.com.fdm.bot.commands.RawMsgCommand;
 import de.com.fdm.bot.commands.UpdateCommand;
 import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.bot.commands.UserIdCommand;
+import de.com.fdm.bot.commands.formula1.DriverStandingsCommand;
 import de.com.fdm.twitch.tmi.TmiMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,7 @@ public class CommandRunner {
             @Autowired CommitCommand commitCommand,
             @Autowired UpdateCommand updateCommand,
             @Autowired RawMsgCommand rawMsgCommand,
+            @Autowired DriverStandingsCommand driverStandingsCommand,
             @Autowired UnkownCommand unkownCommand
     ) {
         commandMap = new HashMap<>();
@@ -49,6 +51,7 @@ public class CommandRunner {
         commandMap.put("commit", commitCommand);
         commandMap.put("update", updateCommand);
         commandMap.put("rawmsg", rawMsgCommand);
+        commandMap.put("driverstandings", driverStandingsCommand);
 
         this.unkownCommand = unkownCommand;
     }

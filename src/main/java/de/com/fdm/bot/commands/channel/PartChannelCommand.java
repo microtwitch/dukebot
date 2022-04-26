@@ -1,4 +1,4 @@
-package de.com.fdm.bot.commands;
+package de.com.fdm.bot.commands.channel;
 
 import de.com.fdm.bot.Command;
 import de.com.fdm.twitch.tmi.TmiMessage;
