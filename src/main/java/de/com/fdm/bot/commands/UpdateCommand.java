@@ -1,8 +1,8 @@
 package de.com.fdm.bot.commands;
 
 import de.com.fdm.bot.Command;
-import de.com.fdm.bot.Parameters;
 import de.com.fdm.bot.api.WatchtowerService;
+import de.com.fdm.twitch.tmi.TmiMessage;
 import de.com.fdm.twitch.tmi.TmiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,8 +21,8 @@ public class UpdateCommand implements Command {
     }
 
     @Override
-    public String execute(Parameters params) {
-        tmiService.send(params.getChannel(), "Updating...");
+    public String execute(TmiMessage tmiMessage) {
+        tmiService.send(tmiMessage.getChannel(), "Updating...");
 
         watchtowerService.update();
 

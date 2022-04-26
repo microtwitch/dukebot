@@ -8,6 +8,7 @@ import de.com.fdm.bot.commands.JoinChannelCommand;
 import de.com.fdm.bot.commands.ListChannelsCommand;
 import de.com.fdm.bot.commands.PartChannelCommand;
 import de.com.fdm.bot.commands.PingCommand;
+import de.com.fdm.bot.commands.RawMsgCommand;
 import de.com.fdm.bot.commands.UpdateCommand;
 import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.bot.commands.UserIdCommand;
@@ -15,9 +16,7 @@ import de.com.fdm.twitch.tmi.TmiMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 @Component
 public class CommandRunner {
@@ -35,6 +34,7 @@ public class CommandRunner {
             @Autowired PartChannelCommand partChannelCommand,
             @Autowired CommitCommand commitCommand,
             @Autowired UpdateCommand updateCommand,
+            @Autowired RawMsgCommand rawMsgCommand,
             @Autowired UnkownCommand unkownCommand
     ) {
         commandMap = new HashMap<>();
@@ -48,6 +48,7 @@ public class CommandRunner {
         commandMap.put("partchannel", partChannelCommand);
         commandMap.put("commit", commitCommand);
         commandMap.put("update", updateCommand);
+        commandMap.put("rawmsg", rawMsgCommand);
 
         this.unkownCommand = unkownCommand;
     }
@@ -56,11 +57,8 @@ public class CommandRunner {
         String messageText = msg.getMessage().substring(1);
         String[] chunks = messageText.split(" ");
 
-        List<String> args = Arrays.stream(chunks).toList().subList(1, chunks.length);
-        Parameters params = new Parameters(msg.getChannel(), messageText, args);
-
         Command command = commandMap.getOrDefault(chunks[0], unkownCommand);
 
-        return command.execute(params);
+        return command.execute(msg);
     }
 }

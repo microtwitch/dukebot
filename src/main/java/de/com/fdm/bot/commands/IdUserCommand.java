@@ -1,8 +1,8 @@
 package de.com.fdm.bot.commands;
 
 import de.com.fdm.bot.Command;
-import de.com.fdm.bot.Parameters;
 import de.com.fdm.twitch.api.TwitchApiProvider;
+import de.com.fdm.twitch.tmi.TmiMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,12 +15,12 @@ public class IdUserCommand implements Command {
     }
 
     @Override
-    public String execute(Parameters params) {
-        if (params.getArgs().size() == 0) {
+    public String execute(TmiMessage tmiMessage) {
+        if (tmiMessage.getArgs().size() == 0) {
             return "No id provided";
         }
 
-        String userId = params.getArgs().get(0);
+        String userId = tmiMessage.getArgs().get(0);
         String userName = this.twitchApiProvider.getUserName(userId);
 
         return String.format("%s -> %s", userId, userName);

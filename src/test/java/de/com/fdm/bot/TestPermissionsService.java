@@ -14,7 +14,8 @@ public class TestPermissionsService {
         TmiMessage msg = new TmiMessage(
                 "testUserId",
                 "testChannel",
-                "testMessage"
+                "testMessage",
+                "rawMessage"
         );
 
         PermissionsService permissionsService = new PermissionsService(
@@ -30,7 +31,8 @@ public class TestPermissionsService {
         TmiMessage msg = new TmiMessage(
                 "116672490",
                 "testChannel",
-                ",testMessage"
+                ",testMessage",
+                "rawMessage"
         );
 
         PermissionsService permissionsService = new PermissionsService(

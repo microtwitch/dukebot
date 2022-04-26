@@ -5,12 +5,9 @@ import de.com.fdm.twitch.tmi.TmiMessage;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EchoCommand implements Command {
+public class RawMsgCommand implements Command {
+    @Override
     public String execute(TmiMessage tmiMessage) {
-        if (tmiMessage.getMessage().length() < 5) {
-            return "";
-        }
-
-        return tmiMessage.getMessage().substring(5);
+        return tmiMessage.getRawMessage();
     }
 }

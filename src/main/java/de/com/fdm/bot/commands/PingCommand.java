@@ -2,7 +2,7 @@ package de.com.fdm.bot.commands;
 
 
 import de.com.fdm.bot.Command;
-import de.com.fdm.bot.Parameters;
+import de.com.fdm.twitch.tmi.TmiMessage;
 import org.springframework.stereotype.Component;
 
 import java.lang.management.ManagementFactory;
@@ -11,7 +11,7 @@ import java.time.Duration;
 
 @Component
 public class PingCommand implements Command {
-    public String execute(Parameters params) {
+    public String execute(TmiMessage tmiMessage) {
         return String.format("Uptime: %s", this.formatUptime(this.getUptime()));
     }
 
