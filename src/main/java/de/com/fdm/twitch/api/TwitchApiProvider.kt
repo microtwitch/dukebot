@@ -1,63 +1,55 @@
-package de.com.fdm.twitch.api;
+package de.com.fdm.twitch.api
 
-import com.github.twitch4j.TwitchClient;
-import com.github.twitch4j.TwitchClientBuilder;
-import com.github.twitch4j.helix.domain.User;
-import com.github.twitch4j.helix.domain.UserList;
-import com.netflix.hystrix.exception.HystrixRuntimeException;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
+import com.github.twitch4j.TwitchClient
+import com.github.twitch4j.TwitchClientBuilder
+import com.github.twitch4j.helix.domain.UserList
+import com.netflix.hystrix.exception.HystrixRuntimeException
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 
 @Component
-public class TwitchApiProvider {
-    private final String botAuth;
-    private final TwitchClient client;
+class TwitchApiProvider(@param:Value("\${bot.auth}") private val botAuth: String) {
+    private val logger = LoggerFactory.getLogger(TwitchApiProvider::class.java)
 
-    public TwitchApiProvider(@Value("${bot.auth}") String botAuth) {
-        this.botAuth = botAuth;
-        this.client = TwitchClientBuilder
-                .builder()
-                .withEnableHelix(true)
-                .build();
+    private val client: TwitchClient = TwitchClientBuilder
+            .builder()
+            .withEnableHelix(true)
+            .build()
+
+    fun getUserId(userName: String): String? {
+        val userList: UserList = try {
+            client.helix
+                    .getUsers(botAuth, null, listOf(userName))
+                    .execute()
+        } catch (e: HystrixRuntimeException) {
+            logger.error(e.message)
+            return null
+        }
+
+        val users = userList.users
+        if (users.isEmpty()) {
+            return null
+        }
+
+        return users[0].id
     }
 
-    public String getUserId(String userName) {
-        UserList userList;
-        try {
-            userList = client
-                    .getHelix()
-                    .getUsers(botAuth, null, List.of(userName))
-                    .execute();
-        } catch (HystrixRuntimeException e) {
-            return null;
+    fun getUserName(userId: String): String? {
+        val userList: UserList = try {
+            client.helix
+                    .getUsers(botAuth, listOf(userId), null)
+                    .execute()
+        } catch (e: HystrixRuntimeException) {
+            logger.error(e.message)
+            return null
         }
 
-        List<User> users = userList.getUsers();
-        if (users.size() == 0) {
-            return null;
+        val users = userList.users
+        if (users.isEmpty()) {
+            return null
         }
 
-        return users.get(0).getId();
-    }
-
-    public String getUserName(String userId) {
-        UserList userList;
-        try {
-            userList = client
-                    .getHelix()
-                    .getUsers(botAuth, List.of(userId), null)
-                    .execute();
-        } catch (HystrixRuntimeException e) {
-            return "User not found";
-        }
-
-        List<User> users = userList.getUsers();
-        if (users.size() == 0) {
-            return "User not found";
-        }
-
-        return users.get(0).getDisplayName();
+        return users[0].displayName
     }
 }
