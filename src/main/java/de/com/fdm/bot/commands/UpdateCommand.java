@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RestartCommand implements Command {
+public class UpdateCommand implements Command {
     private final WatchtowerService watchtowerService;
     private final TmiService tmiService;
 
-    public RestartCommand(
+    public UpdateCommand(
             @Autowired WatchtowerService watchtowerService,
             @Autowired TmiService tmiService
     ) {
@@ -22,7 +22,7 @@ public class RestartCommand implements Command {
 
     @Override
     public String execute(Parameters params) {
-        tmiService.send(params.getChannel(), "Restarting...");
+        tmiService.send(params.getChannel(), "Updating...");
 
         watchtowerService.update();
 

@@ -1,6 +1,5 @@
 package de.com.fdm.bot;
 
-import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
 import de.com.fdm.bot.commands.CommitCommand;
 import de.com.fdm.bot.commands.EchoCommand;
 import de.com.fdm.bot.commands.HttpStatusCommand;
@@ -9,7 +8,7 @@ import de.com.fdm.bot.commands.JoinChannelCommand;
 import de.com.fdm.bot.commands.ListChannelsCommand;
 import de.com.fdm.bot.commands.PartChannelCommand;
 import de.com.fdm.bot.commands.PingCommand;
-import de.com.fdm.bot.commands.RestartCommand;
+import de.com.fdm.bot.commands.UpdateCommand;
 import de.com.fdm.bot.commands.UnkownCommand;
 import de.com.fdm.bot.commands.UserIdCommand;
 import de.com.fdm.twitch.tmi.TmiMessage;
@@ -35,7 +34,7 @@ public class CommandRunner {
             @Autowired JoinChannelCommand joinChannelCommand,
             @Autowired PartChannelCommand partChannelCommand,
             @Autowired CommitCommand commitCommand,
-            @Autowired RestartCommand restartCommand,
+            @Autowired UpdateCommand updateCommand,
             @Autowired UnkownCommand unkownCommand
     ) {
         commandMap = new HashMap<>();
@@ -48,7 +47,7 @@ public class CommandRunner {
         commandMap.put("joinchannel", joinChannelCommand);
         commandMap.put("partchannel", partChannelCommand);
         commandMap.put("commit", commitCommand);
-        commandMap.put("restart", restartCommand);
+        commandMap.put("update", updateCommand);
 
         this.unkownCommand = unkownCommand;
     }
