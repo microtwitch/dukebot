@@ -5,3 +5,7 @@ bot:
   name: "gopherobot"
   auth: "supasecret"
   prefix: ","
+
+watchtower:
+  url: "https://example.com/v1/update"
+  token: "supamegasecret"

@@ -1,4 +1,4 @@
-package de.com.fdm.bot.commands;
+package de.com.fdm.bot;
 
 import de.com.fdm.twitch.tmi.TmiMessage;
 import org.springframework.beans.factory.annotation.Value;

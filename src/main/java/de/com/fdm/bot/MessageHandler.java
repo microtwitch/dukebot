@@ -1,6 +1,5 @@
 package de.com.fdm.bot;
 
-import de.com.fdm.bot.commands.PermissionsService;
 import de.com.fdm.twitch.tmi.TmiMessage;
 import de.com.fdm.twitch.tmi.TmiService;
 import org.springframework.beans.factory.annotation.Autowired;
