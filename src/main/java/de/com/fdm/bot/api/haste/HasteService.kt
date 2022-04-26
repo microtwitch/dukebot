@@ -1,49 +1,40 @@
-package de.com.fdm.bot.api.haste;
+package de.com.fdm.bot.api.haste
 
-import com.google.gson.Gson;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import com.google.gson.Gson
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
+import java.io.IOException
 
 @Service
-public class HasteService {
-    Logger logger = LoggerFactory.getLogger(HasteService.class);
-    private final String url;
+class HasteService(@param:Value("\${haste.url}") private val url: String) {
+    private val logger = LoggerFactory.getLogger(HasteService::class.java)
+    private val client = OkHttpClient()
 
-    public HasteService(@Value("${haste.url}") String url) {
-        this.url = url;
-    }
-
-    public String upload(String content) {
-        OkHttpClient client = new OkHttpClient();
-
-        RequestBody body = RequestBody.create(content.getBytes(StandardCharsets.UTF_8));
-        Request request = new Request.Builder()
+    fun upload(content: String): String? {
+        val request: Request = Request.Builder()
                 .url(url + "documents")
-                .post(body)
-                .build();
+                .post(content.toRequestBody())
+                .build()
 
-        try (Response response = client.newCall(request).execute()) {
-            if (response.body() == null) {
-                logger.error(response.toString());
-                return "Error uploading to hastebin";
+        try {
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) {
+                    logger.error(response.toString())
+                    return null
+                }
+
+                val gson = Gson()
+                val responseBody = response.body?.string()
+                val hasteResponse = gson.fromJson(responseBody, HasteResponse::class.java)
+                return url + hasteResponse.key
             }
-
-            Gson gson = new Gson();
-            String responseBody = response.body().string();
-            HasteResponse hasteResponse = gson.fromJson(responseBody, HasteResponse.class);
-            return url + hasteResponse.getKey();
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-            return "Error uploading to hastebin";
+        } catch (e: IOException) {
+            logger.error(e.message)
+            return null
         }
     }
 }
