@@ -1,25 +1,24 @@
-package de.com.fdm.bot;
+package de.com.fdm.bot
 
-import de.com.fdm.twitch.tmi.TmiMessage;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import de.com.fdm.twitch.tmi.TmiMessage
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
 
 @Service
-public class PermissionsService {
-    private static final String OWNER_ID = "116672490";
-    private final String botPrefix;
+class PermissionsService(
+        @param:Value("\${bot.prefix}") private val botPrefix: String
+) {
+    private val ownerId = "116672490"
 
-    public PermissionsService(
-            @Value("${bot.prefix}") String botPrefix
-    ) {
-        this.botPrefix = botPrefix;
-    }
-
-    public boolean shouldIgnore(TmiMessage msg) {
-        if (!msg.getUserId().equals(OWNER_ID)) {
-            return true;
+    fun shouldIgnore(msg: TmiMessage): Boolean {
+        if (msg.userId != ownerId) {
+            return true
         }
 
-        return !msg.getMessage().startsWith(botPrefix);
+        if (!msg.message.startsWith(botPrefix)) {
+            return true
+        }
+
+        return false
     }
 }
