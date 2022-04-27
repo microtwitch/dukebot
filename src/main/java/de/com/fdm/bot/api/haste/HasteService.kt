@@ -14,7 +14,7 @@ class HasteService(@param:Value("\${haste.url}") private val url: String) {
     private val logger = LoggerFactory.getLogger(HasteService::class.java)
     private val client = OkHttpClient()
 
-    fun upload(content: String): String? {
+    fun upload(content: String): String {
         val request: Request = Request.Builder()
                 .url(url + "documents")
                 .post(content.toRequestBody())
@@ -24,7 +24,7 @@ class HasteService(@param:Value("\${haste.url}") private val url: String) {
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) {
                     logger.error(response.toString())
-                    return null
+                    return ""
                 }
 
                 val gson = Gson()
@@ -34,7 +34,7 @@ class HasteService(@param:Value("\${haste.url}") private val url: String) {
             }
         } catch (e: IOException) {
             logger.error(e.message)
-            return null
+            return ""
         }
     }
 }
