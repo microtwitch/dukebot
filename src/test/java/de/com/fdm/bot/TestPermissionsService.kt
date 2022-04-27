@@ -1,45 +1,35 @@
-package de.com.fdm.bot;
+package de.com.fdm.bot
 
+import de.com.fdm.twitch.tmi.TmiMessage
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
-import de.com.fdm.twitch.tmi.TmiMessage;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-public class TestPermissionsService {
-
+class TestPermissionsService {
     @Test
-    public void testUserNotOwner() {
-        TmiMessage msg = new TmiMessage(
+    fun testUserNotOwner() {
+        val msg = TmiMessage(
                 "testUserId",
                 "testChannel",
                 "testMessage",
                 "rawMessage"
-        );
+        )
 
-        PermissionsService permissionsService = new PermissionsService(
-               ","
-        );
-
-        boolean result = permissionsService.shouldIgnore(msg);
-        assertTrue(result);
+        val permissionsService = PermissionsService(",")
+        val result = permissionsService.shouldIgnore(msg)
+        Assertions.assertTrue(result)
     }
 
     @Test
-    public void testMessageStartsWithBotPrefix() {
-        TmiMessage msg = new TmiMessage(
+    fun testMessageStartsWithBotPrefix() {
+        val msg = TmiMessage(
                 "116672490",
                 "testChannel",
                 ",testMessage",
                 "rawMessage"
-        );
+        )
 
-        PermissionsService permissionsService = new PermissionsService(
-                ","
-        );
-
-        boolean result = permissionsService.shouldIgnore(msg);
-        assertFalse(result);
+        val permissionsService = PermissionsService(",")
+        val result = permissionsService.shouldIgnore(msg)
+        Assertions.assertFalse(result)
     }
 }
