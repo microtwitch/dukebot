@@ -1,6 +1,7 @@
 package de.com.fdm.bot
 
 import de.com.fdm.bot.commands.*
+import de.com.fdm.bot.commands.formula1.DriverStandingsCommand
 import de.com.fdm.twitch.tmi.TmiMessage
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -18,6 +19,7 @@ class CommandRunner(
         @Autowired commitCommand: CommitCommand,
         @Autowired updateCommand: UpdateCommand,
         @Autowired rawMsgCommand: RawMsgCommand,
+        @Autowired driverStandingsCommand: DriverStandingsCommand,
         @Autowired unknownCommand: UnknownCommand
 ) {
     private val unknownCommand: UnknownCommand
@@ -35,6 +37,7 @@ class CommandRunner(
         commandMap["commit"] = commitCommand
         commandMap["update"] = updateCommand
         commandMap["rawmsg"] = rawMsgCommand
+        commandMap["driverstandings"] = driverStandingsCommand
 
         this.unknownCommand = unknownCommand
     }
