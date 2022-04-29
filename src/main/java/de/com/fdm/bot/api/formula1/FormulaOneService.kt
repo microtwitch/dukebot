@@ -14,7 +14,6 @@ class FormulaOneService {
     private val client = OkHttpClient()
 
     fun getStandings() : DriverStandingsData? {
-        logger.info("test")
         val request: Request = Request.Builder()
                 .url("http://ergast.com/api/f1/current/driverStandings.json")
                 .build()

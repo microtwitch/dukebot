@@ -12,7 +12,26 @@ class DriverStandingsCommand(
 ) : Command {
     override fun execute(tmiMessage: TmiMessage): String {
         val data = formulaOneService.getStandings()
+        val standingsList = data?.mRData?.standingsTable?.standingsLists?.get(0) ?: return "Error fetching data"
+        val result = StringBuilder()
 
-        return ""
+        var limit = 0
+        for (driverStanding in standingsList.driverStandings) {
+            result.append(driverStanding.position)
+                .append(". ")
+                .append(driverStanding.driver.givenName)
+                .append(" ")
+                .append(driverStanding.driver.familyName)
+                .append(" (")
+                .append(driverStanding.points)
+                .append(") | ")
+
+            limit++
+            if (limit >= 10) {
+                break
+            }
+        }
+
+        return result.toString()
     }
 }

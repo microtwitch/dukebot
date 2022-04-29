@@ -30,8 +30,6 @@ data class DriverStandings(
     val points : String,
     @SerializedName("Driver")
     val driver : Driver,
-    @SerializedName("Constructors")
-    val constructor : List<Constructors>
 )
 
 data class Driver(
@@ -39,9 +37,4 @@ data class Driver(
     val givenName : String,
     @SerializedName("familyName")
     val familyName : String
-)
-
-data class Constructors(
-    @SerializedName("naem")
-    val name : String
 )
