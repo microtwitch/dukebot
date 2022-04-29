@@ -17,6 +17,11 @@ class Application(
     fun joinChannels() {
         tmiService.joinChannels(channels)
     }
+
+    @EventListener(ApplicationReadyEvent::class)
+    fun sendRestartMessage() {
+        tmiService.send("matthewde", "Restarted!")
+    }
 }
 
 fun main(args: Array<String>) {
