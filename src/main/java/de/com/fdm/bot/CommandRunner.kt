@@ -1,24 +1,28 @@
 package de.com.fdm.bot
 
 import de.com.fdm.bot.commands.*
+import de.com.fdm.bot.commands.formula1.ConstructorStandingsCommand
+import de.com.fdm.bot.commands.formula1.DriverStandingsCommand
 import de.com.fdm.twitch.tmi.TmiMessage
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
 class CommandRunner(
-        @Autowired pingCommand: PingCommand,
-        @Autowired echoCommand: EchoCommand,
-        @Autowired userIdCommand: UserIdCommand,
-        @Autowired idUserCommand: IdUserCommand,
-        @Autowired httpStatusCommand: HttpStatusCommand,
-        @Autowired listChannelsCommand: ListChannelsCommand,
-        @Autowired joinChannelCommand: JoinChannelCommand,
-        @Autowired partChannelCommand: PartChannelCommand,
-        @Autowired commitCommand: CommitCommand,
-        @Autowired updateCommand: UpdateCommand,
-        @Autowired rawMsgCommand: RawMsgCommand,
-        @Autowired unknownCommand: UnknownCommand
+    @Autowired pingCommand: PingCommand,
+    @Autowired echoCommand: EchoCommand,
+    @Autowired userIdCommand: UserIdCommand,
+    @Autowired idUserCommand: IdUserCommand,
+    @Autowired httpStatusCommand: HttpStatusCommand,
+    @Autowired listChannelsCommand: ListChannelsCommand,
+    @Autowired joinChannelCommand: JoinChannelCommand,
+    @Autowired partChannelCommand: PartChannelCommand,
+    @Autowired commitCommand: CommitCommand,
+    @Autowired updateCommand: UpdateCommand,
+    @Autowired rawMsgCommand: RawMsgCommand,
+    @Autowired driverStandingsCommand: DriverStandingsCommand,
+    @Autowired constructorStandingsCommand: ConstructorStandingsCommand,
+    @Autowired unknownCommand: UnknownCommand
 ) {
     private val unknownCommand: UnknownCommand
     private val commandMap: HashMap<String, Command> = HashMap()
@@ -35,6 +39,8 @@ class CommandRunner(
         commandMap["commit"] = commitCommand
         commandMap["update"] = updateCommand
         commandMap["rawmsg"] = rawMsgCommand
+        commandMap["driverstandings"] = driverStandingsCommand
+        commandMap["constructorstandings"] = constructorStandingsCommand
 
         this.unknownCommand = unknownCommand
     }
