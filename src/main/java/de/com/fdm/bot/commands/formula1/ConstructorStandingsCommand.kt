@@ -7,29 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class DriverStandingsCommand(
-        @param:Autowired private val formulaOneService: FormulaOneService
+class ConstructorStandingsCommand(
+    @param:Autowired private val formulaOneService: FormulaOneService
 ) : Command {
     override fun execute(tmiMessage: TmiMessage): String {
-        val data = formulaOneService.getStandings()
+        val data = formulaOneService.getConstructorStandings()
         val standingsList = data?.mRData?.standingsTable?.standingsLists?.get(0) ?: return "Error fetching data"
         val result = StringBuilder()
 
-        var limit = 0
-        for (driverStanding in standingsList.driverStandings) {
-            result.append(driverStanding.position)
+        for (constructorStanding in standingsList.constructorStandings) {
+            result.append(constructorStanding.position)
                 .append(". ")
-                .append(driverStanding.driver.givenName)
-                .append(" ")
-                .append(driverStanding.driver.familyName)
+                .append(constructorStanding.constructor.name)
                 .append(" (")
-                .append(driverStanding.points)
+                .append(constructorStanding.points)
                 .append(") | ")
-
-            limit++
-            if (limit >= 10) {
-                break
-            }
         }
 
         return result.deleteCharAt(result.length-2).toString()

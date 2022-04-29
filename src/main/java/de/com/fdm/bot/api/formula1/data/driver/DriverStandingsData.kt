@@ -1,4 +1,4 @@
-package de.com.fdm.bot.api.formula1.data
+package de.com.fdm.bot.api.formula1.data.driver
 
 import com.google.gson.annotations.SerializedName
 
