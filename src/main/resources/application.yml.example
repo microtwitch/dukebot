@@ -1,7 +1,7 @@
 bot:
   channels: >
       matthewde,
-      gopherobot
+      turtoise
   name: "gopherobot"
   auth: "supasecret"
   prefix: ","
@@ -12,3 +12,11 @@ watchtower:
 
 haste:
   url: "https://example.com/"
+
+logging:
+  level:
+    com:
+      netflix:
+        config:
+          sources:
+            URLConfigurationSource: ERROR
