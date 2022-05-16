@@ -9,15 +9,24 @@ import java.time.Duration
 @Component
 class PingCommand : Command {
     override fun execute(tmiMessage: TmiMessage): String {
-        return String.format("Uptime: %s", formatUptime(calculateUptime()))
+        val uptime = getUptime()
+        val memory = getMemoryUsage()
+        return String.format("Uptime: %s, Memory: %sMB", uptime, memory)
     }
 
-    private fun formatUptime(uptime: Long): String {
-        return Duration.ofMillis(uptime).toString().substring(2).lowercase()
+    private fun getMemoryUsage() : Long {
+        val heapUsage = (ManagementFactory.getMemoryMXBean().heapMemoryUsage.used) / (1024 * 1024)
+        val nonHeapUsage = (ManagementFactory.getMemoryMXBean().nonHeapMemoryUsage.used) / (1024 * 1024)
+
+        return heapUsage + nonHeapUsage
     }
 
-    private fun calculateUptime() : Long {
+    private fun getUptime() : String{
         val rb = ManagementFactory.getRuntimeMXBean()
-        return rb.uptime
+        return formatUptime(rb.uptime)
+    }
+
+    private fun formatUptime(uptime: Long) : String {
+        return Duration.ofMillis(uptime).toString().substring(2).lowercase()
     }
 }
