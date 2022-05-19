@@ -31,8 +31,8 @@ tasks.withType<Test> {
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "microtwitch_dukebot"
-        property "sonar.organization", "microtwitch"
-        property "sonar.host.url", "https://sonarcloud.io"
+        property("sonar.projectKey", "microtwitch_dukebot")
+        property("sonar.organization", "microtwitch")
+        property("sonar.host.url", "https://sonarcloud.io")
     }
 }
