@@ -15,11 +15,8 @@ class UpdateCommand(
         @param:Autowired private val githubService: GithubService
 ) : Command {
     override fun execute(tmiMessage: TmiMessage): String {
-        val currentHash = System.getenv("COMMIT_SHA").substring(0, 7)
+        val currentHash = System.getenv("COMMIT_SHA")
         val latestHash = githubService.getLatestCommit()
-
-        println(currentHash)
-        println(latestHash)
 
         if (currentHash == latestHash) {
             return "Already on latest commit!"
