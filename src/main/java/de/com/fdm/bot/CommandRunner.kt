@@ -22,6 +22,7 @@ class CommandRunner(
     @Autowired rawMsgCommand: RawMsgCommand,
     @Autowired driverStandingsCommand: DriverStandingsCommand,
     @Autowired constructorStandingsCommand: ConstructorStandingsCommand,
+    @Autowired domainCommand: DynaDomainCommand,
     @Autowired unknownCommand: UnknownCommand
 ) {
     private val unknownCommand: UnknownCommand
@@ -41,6 +42,7 @@ class CommandRunner(
         commandMap["rawmsg"] = rawMsgCommand
         commandMap["driverstandings"] = driverStandingsCommand
         commandMap["constructorstandings"] = constructorStandingsCommand
+        commandMap["domain"] = domainCommand
 
         this.unknownCommand = unknownCommand
     }
