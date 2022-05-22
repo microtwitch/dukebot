@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter:2.6.7")
-    implementation("org.springframework:spring-web:5.3.19")
+    implementation("org.springframework:spring-web:5.3.20")
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
     implementation("com.github.twitch4j:twitch4j:1.9.0")
