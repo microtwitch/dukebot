@@ -19,6 +19,7 @@ dependencies {
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
     implementation("com.github.twitch4j:twitch4j:1.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("org.redisson:redisson:3.17.1")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")

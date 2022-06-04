@@ -1,6 +1,6 @@
 package de.com.fdm.bot
 
-import de.com.fdm.twitch.tmi.TmiMessage
+import de.com.fdm.bot.api.twitch.tmi.TmiMessage
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 

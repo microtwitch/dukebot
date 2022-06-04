@@ -1,7 +1,7 @@
 package de.com.fdm.bot.commands
 
 import de.com.fdm.bot.Command
-import de.com.fdm.twitch.tmi.TmiMessage
+import de.com.fdm.bot.api.twitch.tmi.TmiMessage
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 

@@ -1,6 +1,6 @@
 package de.com.fdm.bot
 
-import de.com.fdm.twitch.tmi.TmiMessage
+import de.com.fdm.bot.api.twitch.tmi.TmiMessage
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

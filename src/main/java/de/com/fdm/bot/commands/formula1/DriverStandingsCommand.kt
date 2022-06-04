@@ -2,7 +2,7 @@ package de.com.fdm.bot.commands.formula1
 
 import de.com.fdm.bot.Command
 import de.com.fdm.bot.api.formula1.FormulaOneService
-import de.com.fdm.twitch.tmi.TmiMessage
+import de.com.fdm.bot.api.twitch.tmi.TmiMessage
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
