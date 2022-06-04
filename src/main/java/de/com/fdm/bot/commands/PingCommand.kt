@@ -1,14 +1,14 @@
 package de.com.fdm.bot.commands
 
 import de.com.fdm.bot.Command
-import de.com.fdm.bot.api.twitch.tmi.TmiMessage
+import de.com.fdm.bot.api.twitch.tmi.ReceiverMessage
 import org.springframework.stereotype.Component
 import java.lang.management.ManagementFactory
 import java.time.Duration
 
 @Component
 class PingCommand : Command {
-    override fun execute(tmiMessage: TmiMessage): String {
+    override fun execute(receiverMessage: ReceiverMessage): String {
         val uptime = getUptime()
         val memory = getMemoryUsage()
         return String.format("Uptime: %s, Memory: %sMB", uptime, memory)

@@ -1,6 +1,6 @@
 package de.com.fdm.main
 
-import de.com.fdm.bot.api.twitch.tmi.TmiReceiverService
+import de.com.fdm.bot.api.twitch.tmi.TmiService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -10,17 +10,17 @@ import org.springframework.context.event.EventListener
 
 @SpringBootApplication(scanBasePackages = ["de.com.fdm.*"])
 class Application(
-    @param:Autowired private val tmiReceiverService: TmiReceiverService,
+    @param:Autowired private val tmiService: TmiService,
     @param:Value("\${bot.channels}") private val channels: Array<String>
 ) {
     @EventListener(ApplicationReadyEvent::class)
     fun joinChannels() {
-        tmiReceiverService.joinChannels(channels)
+        tmiService.joinChannels(channels)
     }
 
     @EventListener(ApplicationReadyEvent::class)
     fun sendRestartMessage() {
-        tmiReceiverService.send("matthewde", "Restarted!")
+        tmiService.send("matthewde", "Restarted!")
     }
 }
 

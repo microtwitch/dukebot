@@ -3,7 +3,7 @@ package de.com.fdm.bot.api.twitch.tmi
 import com.fasterxml.jackson.annotation.JsonProperty
 
 
-data class TmiMessage(
+data class ReceiverMessage(
         @JsonProperty("channel")
         val channel: String,
         @JsonProperty("message")

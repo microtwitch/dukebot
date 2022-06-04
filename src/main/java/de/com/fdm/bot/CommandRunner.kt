@@ -3,7 +3,7 @@ package de.com.fdm.bot
 import de.com.fdm.bot.commands.*
 import de.com.fdm.bot.commands.formula1.ConstructorStandingsCommand
 import de.com.fdm.bot.commands.formula1.DriverStandingsCommand
-import de.com.fdm.bot.api.twitch.tmi.TmiMessage
+import de.com.fdm.bot.api.twitch.tmi.ReceiverMessage
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -47,7 +47,7 @@ class CommandRunner(
         this.unknownCommand = unknownCommand
     }
 
-    fun runCommand(msg: TmiMessage): String {
+    fun runCommand(msg: ReceiverMessage): String {
         val messageText = msg.message.substring(1)
         val chunks = messageText.split(" ")
         val command = commandMap.getOrDefault(chunks[0], unknownCommand)

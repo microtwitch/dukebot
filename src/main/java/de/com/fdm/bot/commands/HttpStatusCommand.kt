@@ -1,19 +1,19 @@
 package de.com.fdm.bot.commands
 
 import de.com.fdm.bot.Command
-import de.com.fdm.bot.api.twitch.tmi.TmiMessage
+import de.com.fdm.bot.api.twitch.tmi.ReceiverMessage
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 
 @Component
 class HttpStatusCommand : Command {
-    override fun execute(tmiMessage: TmiMessage): String {
-        if (tmiMessage.getArgs().isEmpty()) {
+    override fun execute(receiverMessage: ReceiverMessage): String {
+        if (receiverMessage.getArgs().isEmpty()) {
             return "No status code provided"
         }
 
         val code: Int = try {
-            tmiMessage.getArgs()[0].toInt()
+            receiverMessage.getArgs()[0].toInt()
         } catch (e: NumberFormatException) {
             return "Not a valid status code"
         }

@@ -1,13 +1,13 @@
 package de.com.fdm.bot
 
-import de.com.fdm.bot.api.twitch.tmi.TmiMessage
+import de.com.fdm.bot.api.twitch.tmi.ReceiverMessage
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 class TestPermissionsService {
     @Test
     fun testUserNotOwner() {
-        val msg = TmiMessage("testChannel", "testMessage", "testUserId", "rawMessage")
+        val msg = ReceiverMessage("testChannel", "testMessage", "testUserId", "rawMessage")
 
         val permissionsService = PermissionsService(",")
         val result = permissionsService.shouldIgnore(msg)
@@ -16,7 +16,7 @@ class TestPermissionsService {
 
     @Test
     fun testMessageStartsWithBotPrefix() {
-        val msg = TmiMessage("testChannel", ",testMessage", "116672490", "rawMessage")
+        val msg = ReceiverMessage("testChannel", ",testMessage", "116672490", "rawMessage")
 
         val permissionsService = PermissionsService(",")
         val result = permissionsService.shouldIgnore(msg)

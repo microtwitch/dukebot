@@ -1,6 +1,6 @@
 package de.com.fdm.bot
 
-import de.com.fdm.bot.api.twitch.tmi.TmiMessage
+import de.com.fdm.bot.api.twitch.tmi.ReceiverMessage
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
@@ -10,7 +10,7 @@ class PermissionsService(
 ) {
     private val ownerId = "116672490"
 
-    fun shouldIgnore(msg: TmiMessage): Boolean {
+    fun shouldIgnore(msg: ReceiverMessage): Boolean {
         if (msg.userId != ownerId) {
             return true
         }

@@ -2,7 +2,7 @@ package de.com.fdm.bot.commands.formula1
 
 import de.com.fdm.bot.Command
 import de.com.fdm.bot.api.formula1.FormulaOneService
-import de.com.fdm.bot.api.twitch.tmi.TmiMessage
+import de.com.fdm.bot.api.twitch.tmi.ReceiverMessage
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class DriverStandingsCommand(
         @param:Autowired private val formulaOneService: FormulaOneService
 ) : Command {
-    override fun execute(tmiMessage: TmiMessage): String {
+    override fun execute(receiverMessage: ReceiverMessage): String {
         val data = formulaOneService.getStandings()
         val standingsList = data?.mRData?.standingsTable?.standingsLists?.get(0) ?: return "Error fetching data"
         val result = StringBuilder()

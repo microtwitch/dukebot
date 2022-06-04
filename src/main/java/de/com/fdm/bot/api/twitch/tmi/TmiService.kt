@@ -13,29 +13,29 @@ import java.io.File
 import java.util.function.Consumer
 
 @Service
-class TmiReceiverService(
+class TmiService(
         @Value("\${bot.auth}") botAuth: String,
         @Value("\${bot.name}") botName: String,
         @param:Autowired private val hasteService: HasteService
 ) {
     private val client: RedissonClient
-    private val mapper = ObjectMapper();
-    private val channels = mutableSetOf<String>();
-    private val auth: String;
-    private val name: String;
-    private lateinit var callback: Consumer<TmiMessage>;
-    private val dispatcherTopic: RTopic;
+    private val mapper = ObjectMapper()
+    private val channels = mutableSetOf<String>()
+    private val auth: String
+    private val name: String
+    private lateinit var callback: Consumer<ReceiverMessage>
+    private val dispatcherTopic: RTopic
 
     init {
         val config = Config.fromYAML(File("src/main/resources/redisson_config.yaml"))
         this.client = Redisson.create(config)
         this.dispatcherTopic = client.getTopic("tmiDispatcher")
-        this.auth = botAuth;
-        this.name = botName;
+        this.auth = botAuth
+        this.name = botName
     }
 
-    fun setCallback(callback: Consumer<TmiMessage>) {
-        this.callback = callback;
+    fun setCallback(callback: Consumer<ReceiverMessage>) {
+        this.callback = callback
     }
 
     fun send(channel: String, msg: String) {
@@ -70,7 +70,7 @@ class TmiReceiverService(
     }
 
     fun handleMessage(message: String?) {
-        val msg = mapper.readValue(message, TmiMessage::class.java);
+        val msg = mapper.readValue(message, ReceiverMessage::class.java)
         callback.accept(msg)
     }
 
