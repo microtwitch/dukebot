@@ -74,7 +74,8 @@ class TmiService(
         callback.accept(msg)
     }
 
-    fun partChannel(channel: String?) {
+    fun partChannel(channel: String) {
+        channels.remove(channel)
         val topic = client.getTopic("tmiReceiver.$channel")
         topic.removeAllListeners()
     }
